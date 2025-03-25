@@ -18,12 +18,6 @@ class Template
     #[ORM\Column(length: 255)]
     private ?string $css_class = null;
 
-    #[ORM\Column]
-    private ?int $size_x = null;
-
-    #[ORM\Column]
-    private ?int $size_y = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $background_image = null;
 
@@ -51,42 +45,6 @@ class Template
     public function setCssClass(string $css_class): static
     {
         $this->css_class = $css_class;
-
-        return $this;
-    }
-
-    public function getSizeX(): ?int
-    {
-        return $this->size_x;
-    }
-
-    public function setSizeX(int $size_x): static
-    {
-        $this->size_x = $size_x;
-
-        return $this;
-    }
-
-    public function getSizeY(): ?int
-    {
-        return $this->size_y;
-    }
-
-    public function setSizeY(int $size_y): static
-    {
-        $this->size_y = $size_y;
-
-        return $this;
-    }
-
-    public function getBacgroundImage(): ?string
-    {
-        return $this->background_image;
-    }
-
-    public function setBacgroundImage(?string $background_image): static
-    {
-        $this->background_image = $background_image;
 
         return $this;
     }
