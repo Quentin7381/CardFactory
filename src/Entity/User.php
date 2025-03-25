@@ -4,11 +4,16 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+
+#[UniqueEntity(fields: ['email'], message: 'This email is already in use.')]
+#[UniqueEntity(fields: ['username'], message: 'This username is already in use.')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,20 +25,18 @@ class User implements UserInterface
         return $this->id;
     }
 
-    #[ORM\Column]
+    #[ORM\Column(unique: true)]
     private string $username;
-    #[ORM\Column]
+    
+    #[ORM\Column(unique: true)]
     private string $email;
     #[ORM\Column]
     private string $password;
     #[ORM\Column]
     private array $roles = [];
 
-    public function __construct(string $username, string $email, string $password)
+    public function __construct()
     {
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
     }
 
     public function getUsername(): string

@@ -23,9 +23,23 @@
                     <h1>
                         Card Factory
                     </h1>
+                    <nav>
+                        <a href="{{ path('home') }}">
+                            Home
+                        </a>
+                    </nav>
                 {% endblock %}
             </header>
 
+            {% block messages %}
+                {% for type, messages in app.flashes %}
+                    <div class="alert alert-{{ type }}">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endblock %}
             {% block content %}{% endblock %}
 
             {% block footer %}{% endblock %}
