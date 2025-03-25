@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,8 +37,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    /**
+     * @var Collection<int, Card>
+     */
+    #[ORM\ManyToMany(targetEntity: Card::class, mappedBy: 'shared_with')]
+    private Collection $shared_cards;
+
+    /**
+     * @var Collection<int, Card>
+     */
+    #[ORM\OneToMany(targetEntity: Card::class, mappedBy: 'author')]
+    private Collection $cards;
+
     public function __construct()
     {
+        $this->shared_cards = new ArrayCollection();
+        $this->cards = new ArrayCollection();
     }
 
     public function getUsername(): string
@@ -100,5 +116,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection<int, Card>
+     */
+    public function getSharedCards(): Collection
+    {
+        return $this->shared_cards;
+    }
+
+    public function addSharedCard(Card $sharedCard): static
+    {
+        if (!$this->shared_cards->contains($sharedCard)) {
+            $this->shared_cards->add($sharedCard);
+            $sharedCard->addSharedWith($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSharedCard(Card $sharedCard): static
+    {
+        if ($this->shared_cards->removeElement($sharedCard)) {
+            $sharedCard->removeSharedWith($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Card>
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): static
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards->add($card);
+            $card->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(Card $card): static
+    {
+        if ($this->cards->removeElement($card)) {
+            // set the owning side to null (unless already changed)
+            if ($card->getAuthor() === $this) {
+                $card->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }
