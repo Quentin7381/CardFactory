@@ -21,13 +21,25 @@ $color-palette: (
     gray: generate-variations(#6e6e6e),
     red: generate-variations(#e63946),
     green: generate-variations(#2ecc71),
-    blue: generate-variations(#009fda),
+    blue: generate-variations(#00bcff),
     yellow: generate-variations(#ffcc00),
     purple: generate-variations(#7239a3),
-    orange: generate-variations(#ff7a00),
+    orange: generate-variations(#f4661b),
     pink: generate-variations(#ff5e94),
     brown: generate-variations(#8b5a2b)
 );
+
+// --- Palette adjustments
+
+$color-palette: map-merge($color-palette, (
+    orange: (
+        base: #f4661b,
+        lighter-1: #f4661b,
+        lighter-2: #ffcdb2,
+        darker-1: #dd5300,
+        darker-2: #753516
+    ),
+));
 
 // ----- COLORS BY USE ----- //
 
@@ -45,6 +57,9 @@ $color: (
     background-second: map-get(map-get($color-palette, blue), darker-1),
     background-second-light: map-get(map-get($color-palette, blue), lighter-1),
     background-second-dark: map-get(map-get($color-palette, blue), lighter-2),
+
+    cta: map-get(map-get($color-palette, orange), darker-1),
+    cta-hover: map-get(map-get($color-palette, orange), base),
 
     success: map-get(map-get($color-palette, green), base),
     info: map-get(map-get($color-palette, blue), base),

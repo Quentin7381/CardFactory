@@ -1,5 +1,17 @@
-.header
-    height: 64px
+:root
+    --header-height: 64px
+
+body
+    padding-top: var(--header-height)
+    
+header
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    z-index: 1000
+
+    height: var(--header-height)
     padding-right: var(--current-container-side-space)
 
     display: flex

@@ -1,6 +1,9 @@
-.container
-    padding: 0 var(--current-container-side-space)
+body 
+    height: 100vh
 
-    // Avoid container conflict
-    .container
-        padding: unset
+section
+    width: 100%
+    padding: 32px var(--current-container-side-space)
+
+    &.full-screen
+        height: calc(100vh - var(--header-height))
