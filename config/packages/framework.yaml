@@ -5,6 +5,10 @@ framework:
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
+    assets:
+        version: '1.0'
+        base_path: ''
+
     #esi: true
     #fragments: true
 

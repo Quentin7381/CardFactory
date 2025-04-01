@@ -1,0 +1,35 @@
+.header
+    height: 64px
+    padding-right: var(--current-container-side-space)
+
+    display: flex
+    align-items: center
+
+    background: var(--color-background-dark)
+
+    > * 
+        height: 100%
+
+    .logo 
+        min-width: var(--current-container-side-space)
+        padding: 0 64px 0 64px
+        clip-path: polygon(0 0, 100% 0, calc(100% - 64px) 100%, 0 100%) // Tilts the right border by 64px
+
+        display: flex
+        align-items: center
+        justify-content: center
+
+        background: var(--color-primary)
+        color: white
+        font-family: var(--font-family-special)
+        font-size: var(--font-size-xl)
+
+    .navbar-main
+        margin-left: -64px
+
+        .nav__link:first-child
+            padding-left: 64px
+
+    .navbar-account
+        margin-left: auto
+        

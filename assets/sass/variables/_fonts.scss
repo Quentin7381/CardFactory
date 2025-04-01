@@ -1,0 +1,26 @@
+$font-size: (
+    xxs: 0.5rem,
+    xs: 0.625rem,
+    sm: 0.75rem,
+    md: 1rem,
+    lg: 1.25rem,
+    xl: 1.5rem,
+    xxl: 2rem
+);
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Orbitron:wght@400;600;700&family=Audiowide&display=swap');
+$font-family: (
+    text: 'Roboto, sans-serif',      // Clean, readable, and widely used  
+    heading: 'Montserrat, sans-serif', // Modern and elegant for headings  
+    special: 'Audiowide, cursive',   // High-tech style for the "CardForge" logo   
+);
+
+:root {
+    @each $size, $value in $font-size {
+        --font-size-#{$size}: #{$value};
+    }
+
+    @each $family, $font in $font-family {
+        --font-family-#{$family}: #{$font};
+    }
+}

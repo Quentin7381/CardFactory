@@ -1,10 +1,10 @@
 // ----- COLORS VARIATIONS ----- //
 
 @function generate-variations($color) {
-    $darker-1: darken($color, 10%);
-    $darker-2: darken($color, 20%);
-    $lighter-1: lighten($color, 10%);
-    $lighter-2: lighten($color, 20%);
+    $darker-1: darken($color, 25%);
+    $darker-2: darken($color, 50%);
+    $lighter-1: lighten($color, 25%);
+    $lighter-2: lighten($color, 50%);
 
     @return (
         darker-2: $darker-2,
@@ -39,9 +39,9 @@ $color: (
     secondary-light: map-get(map-get($color-palette, blue), lighter-1),
     secondary-dark: map-get(map-get($color-palette, blue), darker-1),
 
-    background: map-get(map-get($color-palette, gray), darker-1),
-    background-light: map-get(map-get($color-palette, gray), lighter-1),
-    background-dark: map-get(map-get($color-palette, gray), lighter-2),
+    background: map-get(map-get($color-palette, gray), base),
+    background-light: map-get(map-get($color-palette, gray), lighter-2),
+    background-dark: map-get(map-get($color-palette, gray), darker-1),
     background-second: map-get(map-get($color-palette, blue), darker-1),
     background-second-light: map-get(map-get($color-palette, blue), lighter-1),
     background-second-dark: map-get(map-get($color-palette, blue), lighter-2),

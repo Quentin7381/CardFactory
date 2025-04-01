@@ -1,0 +1,67 @@
+// ----- BREAKPOINTS ----- //
+
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// ----- CONTAINERS ----- //
+
+$containers: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+);
+
+// ----- BREAKPOINT MIXINS ----- //
+
+@mixin breakpoint-up($breakpoint) {
+  @media (min-width: (map-get($breakpoints, $breakpoint) + 0.1px)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// ----- CSS VARIABLES ----- //
+
+:root {
+  @each $breakpoint, $value in $breakpoints {
+    --breakpoint-#{$breakpoint}: #{$value};
+  }
+
+  @each $container, $value in $containers {
+    --container-#{$container}: #{$value};
+  }
+
+  // --- Dynamic container width
+
+  --current-container: var(--container-xxl);
+  --current-container-side-space: calc((100vw - var(--current-container)) / 2);
+
+  @include breakpoint-down(xl) {
+    --current-container: var(--container-xl);
+  }
+  @include breakpoint-down(lg) {
+    --current-container: var(--container-lg);
+  }
+  @include breakpoint-down(md) {
+    --current-container: var(--container-md);
+  }
+  @include breakpoint-down(sm) {
+    --current-container: var(--container-sm);
+  }
+  @include breakpoint-down(xs) {
+    --current-container: var(--container-xs);
+  }
+}
