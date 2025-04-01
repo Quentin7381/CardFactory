@@ -20,14 +20,7 @@
         {% block body %}
             <header>
                 {% block header %}
-                    <h1>
-                        Card Factory
-                    </h1>
-                    <nav>
-                        <a href="{{ path('home') }}">
-                            Home
-                        </a>
-                    </nav>
+                    {{ include('components/header.html.twig') }}
                 {% endblock %}
             </header>
 
