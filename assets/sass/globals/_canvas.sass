@@ -7,3 +7,15 @@ section
 
     &.full-screen
         height: calc(100vh - var(--header-height))
+
+.columns
+    display: flex
+    gap: 32px
+    flex-wrap: wrap
+
+    > *
+        min-width: 300px
+        max-width: 100%
+
+    &-2 > *
+        flex: 1 1 calc(50% - 32px)

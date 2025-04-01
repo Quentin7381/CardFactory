@@ -174,6 +174,20 @@ h6 {
   background: var(--color-background-light);
   font-weight: bold;
 }
+.nav.vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.nav.vertical .nav__link {
+  display: inline;
+  padding: 0;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.nav.vertical .nav__link:hover {
+  background: transparent;
+}
 
 body {
   height: 100vh;
@@ -185,6 +199,19 @@ section {
 }
 section.full-screen {
   height: calc(100vh - var(--header-height));
+}
+
+.columns {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.columns > * {
+  min-width: 300px;
+  max-width: 100%;
+}
+.columns-2 > * {
+  flex: 1 1 calc(50% - 32px);
 }
 
 :root {
@@ -254,4 +281,10 @@ button:hover, .button:hover {
 button.center, .button.center {
   margin-left: auto;
   margin-right: auto;
+}
+
+footer {
+  padding: 16px var(--current-container-side-space);
+  background-color: var(--color-background-dark);
+  color: white;
 }/*# sourceMappingURL=style.css.map */
