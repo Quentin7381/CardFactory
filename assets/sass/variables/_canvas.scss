@@ -47,7 +47,7 @@ $containers: (
   // --- Dynamic container width
 
   --current-container: var(--container-xxl);
-  --current-container-side-space: calc((100vw - var(--current-container)) / 2);
+  --current-container-side-space: max(calc((100vw - var(--current-container)) / 2), 16px);
 
   @include breakpoint-down(xl) {
     --current-container: var(--container-xl);

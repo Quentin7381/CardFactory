@@ -49,7 +49,7 @@
   --container-xl: 1140px;
   --container-xxl: 1320px;
   --current-container: var(--container-xxl);
-  --current-container-side-space: calc((100vw - var(--current-container)) / 2);
+  --current-container-side-space: max(calc((100vw - var(--current-container)) / 2), 16px);
 }
 @media (max-width: 1200px) {
   :root {
@@ -157,6 +157,7 @@ h6 {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  text-align: center;
   color: white;
   padding: 0 16px;
 }
@@ -258,6 +259,18 @@ header .navbar-main .nav__link:first-child {
 }
 header .navbar-account {
   margin-left: auto;
+}
+@media (max-width: 768px) {
+  header .logo {
+    font-size: 0;
+    padding-left: 8px;
+  }
+  header .logo:after {
+    content: "CF";
+    font-size: var(--font-size-xxl);
+    font-family: var(--font-family-special);
+    color: white;
+  }
 }
 
 section.messages {

@@ -1,3 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Orbitron:wght@400;600;700&family=Audiowide&display=swap");
+:root {
+  --color-primary: #f4661b;
+  --color-primary-light: #ff9b69;
+  --color-primary-dark: #dd5300;
+  --color-secondary: #00bcff;
+  --color-secondary-light: #80deff;
+  --color-secondary-dark: #005e80;
+  --color-background: #6e6e6e;
+  --color-background-light: #eeeeee;
+  --color-background-dark: #2e2e2e;
+  --color-background-second: #005e80;
+  --color-background-second-light: #80deff;
+  --color-background-second-dark: white;
+  --color-cta: #dd5300;
+  --color-cta-hover: #f4661b;
+  --color-success: #2ecc71;
+  --color-info: #00bcff;
+  --color-warning: #ffcc00;
+  --color-danger: #e63946;
+  --color-light: #aeaeae;
+  --color-dark: #2e2e2e;
+}
+
+:root {
+  --font-size-xxs: 0.5rem;
+  --font-size-xs: 0.625rem;
+  --font-size-sm: 0.75rem;
+  --font-size-md: 1rem;
+  --font-size-ml: 1.25rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-xxl: 3rem;
+  --font-family-text: Roboto, sans-serif;
+  --font-family-heading: Montserrat, sans-serif;
+  --font-family-special: Audiowide, cursive;
+}
+
+:root {
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-xxl: 1320px;
+  --current-container: var(--container-xxl);
+  --current-container-side-space: max(calc((100vw - var(--current-container)) / 2), 16px);
+}
+@media (max-width: 1200px) {
+  :root {
+    --current-container: var(--container-xl);
+  }
+}
+@media (max-width: 992px) {
+  :root {
+    --current-container: var(--container-lg);
+  }
+}
+@media (max-width: 768px) {
+  :root {
+    --current-container: var(--container-md);
+  }
+}
+@media (max-width: 576px) {
+  :root {
+    --current-container: var(--container-sm);
+  }
+}
+@media (max-width: 0) {
+  :root {
+    --current-container: var(--container-xs);
+  }
+}
+
 main .hero {
   padding-top: 64px;
   padding-bottom: 64px;
@@ -75,4 +154,32 @@ main .explaination li::before {
   height: 2em;
   border-radius: 50%;
   background: var(--color-primary-light);
+}
+@media (max-width: 768px) {
+  main .features {
+    flex-direction: column;
+    gap: 0px;
+  }
+  main .features .feature {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0;
+    width: 100%;
+    aspect-ratio: unset;
+    padding: 16px 0 16px 32px;
+    background: transparent;
+  }
+  main .features .feature i {
+    border-radius: 50%;
+    padding: 16px;
+    background: white;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  main .features .feature h3 {
+    font-size: var(--font-size-lg);
+    color: black;
+  }
 }/*# sourceMappingURL=home.css.map */

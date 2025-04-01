@@ -45,3 +45,15 @@ header
     .navbar-account
         margin-left: auto
         
+    @include breakpoint-down('md')
+        .logo
+            font-size: 0
+            padding-left: 8px
+
+            &:after
+                content: 'CF'
+                font-size: var(--font-size-xxl)
+                font-family: var(--font-family-special)
+                color: white
+
+                
