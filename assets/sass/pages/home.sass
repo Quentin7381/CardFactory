@@ -45,5 +45,46 @@ main
             color: var(--color-background-dark)
             text-align: center
 
+            h3
+                font-size: var(--font-size-ml)
+                margin-bottom: 0
+
             i
                 font-size: 32px
+
+    .explaination
+        h3, p
+            margin: 0
+
+        ol
+            padding-left: 128px
+            margin-top: 32px
+            counter-reset: list-counter
+
+            display: flex
+            flex-direction: column
+            gap: 16px
+
+        li
+            list-style: none
+            position: relative
+            counter-increment: list-counter
+
+            &::before
+                position: absolute
+                left: calc(-2em - 24px)
+                top: 50%
+                transform: translateY(-50%)
+
+                content: counter(list-counter)
+                font-size: var(--font-size-lg)
+
+                display: flex
+                align-items: center
+                justify-content: center
+
+                width: 2em
+                height: 2em
+                border-radius: 50%
+
+                background: var(--color-primary-light)
