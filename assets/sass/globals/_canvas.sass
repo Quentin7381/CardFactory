@@ -8,6 +8,17 @@ section
     &.full-screen
         height: calc(100vh - var(--header-height))
 
+    &.center-box
+        @include breakpoint-up("md")
+            margin: auto
+            min-width: min(100vw, 380px)
+            width: fit-content
+
+            padding: 32px
+            background-color: white
+            border-radius: 8px
+            box-shadow: var(--shadow-base)
+
 .columns
     display: flex
     gap: 32px

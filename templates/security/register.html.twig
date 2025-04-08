@@ -3,6 +3,7 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+    <section class="center-box">
     <h1>Register</h1>
     {{ form_start(form) }}
         {{ form_errors(form) }}
@@ -11,5 +12,7 @@
         {{ form_row(form.plainPassword) }}
 
         <button type="submit" class="btn btn-primary">Register</button>
+        <p>Already have an account? <a href="{{ path('app_login') }}">Login</a></p>
     {{ form_end(form) }}
+    </section>
 {% endblock %}

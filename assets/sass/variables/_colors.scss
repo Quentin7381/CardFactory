@@ -1,10 +1,10 @@
 // ----- COLORS VARIATIONS ----- //
-
+@use 'sass:color';
 @function generate-variations($color) {
-    $darker-1: darken($color, 25%);
-    $darker-2: darken($color, 50%);
-    $lighter-1: lighten($color, 25%);
-    $lighter-2: lighten($color, 50%);
+    $darker-1: color.scale($color, $lightness : -80%);
+    $darker-2: color.scale($color, $lightness : -30%);
+    $lighter-1: color.scale($color, $lightness : 30%);
+    $lighter-2: color.scale($color, $lightness : 90%);
 
     @return (
         darker-2: $darker-2,
@@ -62,10 +62,18 @@ $color: (
     cta-hover: map-get(map-get($color-palette, orange), base),
 
     success: map-get(map-get($color-palette, green), base),
+    success-light: map-get(map-get($color-palette, green), lighter-2),
+    success-dark: map-get(map-get($color-palette, green), darker-1),
     info: map-get(map-get($color-palette, blue), base),
+    info-light: map-get(map-get($color-palette, blue), lighter-2),
+    info-dark: map-get(map-get($color-palette, blue), darker-1),
     warning: map-get(map-get($color-palette, yellow), base),
+    warning-light: map-get(map-get($color-palette, yellow), lighter-2),
+    warning-dark: map-get(map-get($color-palette, yellow), darker-1),
     danger: map-get(map-get($color-palette, red), base),
-    light: map-get(map-get($color-palette, gray), lighter-1),
+    danger-light: map-get(map-get($color-palette, red), lighter-2),
+    danger-dark: map-get(map-get($color-palette, red), darker-1),
+    light: map-get(map-get($color-palette, gray), lighter-2),
     dark: map-get(map-get($color-palette, gray), darker-1)
 );
 

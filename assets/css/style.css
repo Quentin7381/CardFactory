@@ -4,22 +4,30 @@
   --color-primary-light: #ff9b69;
   --color-primary-dark: #dd5300;
   --color-secondary: #00bcff;
-  --color-secondary-light: #80deff;
-  --color-secondary-dark: #005e80;
+  --color-secondary-light: #4dd0ff;
+  --color-secondary-dark: #002633;
   --color-background: #6e6e6e;
-  --color-background-light: #eeeeee;
-  --color-background-dark: #2e2e2e;
-  --color-background-second: #005e80;
-  --color-background-second-light: #80deff;
-  --color-background-second-dark: white;
+  --color-background-light: #f1f1f1;
+  --color-background-dark: #161616;
+  --color-background-second: #002633;
+  --color-background-second-light: #4dd0ff;
+  --color-background-second-dark: #e6f8ff;
   --color-cta: #dd5300;
   --color-cta-hover: #f4661b;
   --color-success: #2ecc71;
+  --color-success-light: #eafaf1;
+  --color-success-dark: #092917;
   --color-info: #00bcff;
+  --color-info-light: #e6f8ff;
+  --color-info-dark: #002633;
   --color-warning: #ffcc00;
+  --color-warning-light: #fffae6;
+  --color-warning-dark: #332900;
   --color-danger: #e63946;
-  --color-light: #aeaeae;
-  --color-dark: #2e2e2e;
+  --color-danger-light: #fdebed;
+  --color-danger-dark: #33060a;
+  --color-light: #f1f1f1;
+  --color-dark: #161616;
 }
 
 :root {
@@ -77,6 +85,13 @@
   }
 }
 
+:root {
+  --shadow-none: 0;
+  --shadow-sm: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow-base: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -84,11 +99,19 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   background: var(--color-background-light);
+  height: 100vh;
+  overflow: scroll;
 }
 
 .hidden {
   display: none;
+}
+
+* {
+  font-family: var(--font-family-body);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -99,7 +122,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-  font-family: var(--font-family-body);
   font-weight: normal;
   margin-bottom: 0.5em;
   line-height: 1.5;
@@ -201,6 +223,18 @@ section {
 section.full-screen {
   height: calc(100vh - var(--header-height));
 }
+@media (min-width: 768.1px) {
+  section.center-box {
+    margin: auto;
+    min-width: min(100vw, 380px);
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 32px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-base);
+  }
+}
 
 .columns {
   display: flex;
@@ -213,6 +247,28 @@ section.full-screen {
 }
 .columns-2 > * {
   flex: 1 1 calc(50% - 32px);
+}
+
+.alert {
+  padding: 8px 16px;
+  background-color: var(--color-info-light);
+  color: var(--color-info-dark);
+}
+.alert-success {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+.alert-warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+.alert-danger {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+.alert-info {
+  background-color: var(--color-info-light);
+  color: var(--color-info-dark);
 }
 
 :root {
@@ -286,6 +342,10 @@ button, .button {
   color: white;
   width: -moz-fit-content;
   width: fit-content;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 button:hover, .button:hover {
   background-color: var(--color-primary-dark);
@@ -297,7 +357,49 @@ button.center, .button.center {
 }
 
 footer {
+  display: block;
+  margin-top: auto;
   padding: 16px var(--current-container-side-space);
   background-color: var(--color-background-dark);
   color: white;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 8px;
+}
+form.columns.columns-2 {
+  max-width: unset;
+}
+form button, form .button {
+  margin: 16px 0;
+  width: 380px;
+  max-width: 380px;
+}
+form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 8px;
+}
+form li {
+  margin: 0;
+  padding: 0;
+  color: var(--color-danger-dark);
+  background-color: var(--color-danger-light);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+input {
+  padding: 8px;
+  display: block;
+  margin-bottom: 8px;
+  width: 380px;
+  max-width: 380px;
+}
+label {
+  display: block;
 }/*# sourceMappingURL=style.css.map */

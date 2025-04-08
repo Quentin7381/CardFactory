@@ -1,3 +1,7 @@
+{% set account_link = app.user ? path('app_logout') : path('app_login') %}
+{% set account_icon = app.user ? 'fa-solid fa-right-from-bracket' : 'fa-solid fa-user' %}
+
+
 <header class="header">
     <a class="logo" href="{{ path('home') }}">
         Card Factory
@@ -11,13 +15,11 @@
         </a>
     </nav>
     <div class="nav nav__bar navbar-account">
-        <a class="nav__link round" href="{{ path('home') }} navlink-cart">
+        <a class="nav__link round navlink-cart" href="{{ path('home') }}">
             <i class="fa-solid fa-cart-shopping"></i>
         </a>
-        <a class="nav__link round" href="{{ path('home') }} navlink-account">
-            <i class="fa-solid fa-user"></i>
+        <a class="nav__link round navlink-account" href="{{ account_link }}">
+            <i class="{{account_icon}}"></i>
         </a>
     </a>
 </header>
-        
-    

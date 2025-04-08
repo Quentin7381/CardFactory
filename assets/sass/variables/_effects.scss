@@ -1,0 +1,16 @@
+// ----- SHADOWS ----- //
+
+$shadows: (
+  none: 0,
+  sm: 0.125rem 0.125rem 0.25rem rgba(black, 0.075),
+  base: 0.25rem 0.25rem 0.5rem rgba(black, 0.1),
+  lg: 0.5rem 0.5rem 1rem rgba(black, 0.15),
+);
+
+// --- Shadows as css vars
+
+:root {
+  @each $name, $value in $shadows {
+    --shadow-#{$name}: #{$value};
+  }
+}
