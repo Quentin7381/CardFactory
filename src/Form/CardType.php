@@ -13,7 +13,7 @@ class CardType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $fields = ['name', 'template', 'card_title', 'card_subtitle', 'card_image'];
+        $fields = ['name', 'card_title', 'card_subtitle', 'card_image'];
 
         foreach ($fields as $field) {
             $builder->add($field, null, [
@@ -38,6 +38,9 @@ class CardType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'form-control card_image', // Add a class for styling
+            ],
+            'label_attr' => [
+                'class' => 'card_image', // Add a class for the label
             ],
         ]);
     }
