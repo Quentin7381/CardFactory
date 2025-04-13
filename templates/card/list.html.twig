@@ -10,7 +10,8 @@
             My cards
         </h1>
         <div class="card-list flex">
-            <a class="card --add" href=""></a>                
+            <a class="card --add" href="{{ path('app_card_add') }}"></a>
+
             {% for card in cards %}
                 <div class="card">
                     <h2>

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Edit card
+{% endblock %}
+
+{% block content %}
+    <section class="center-box">
+        <nav></nav>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.template) }}
+        <div class="card --edit card-style-default">
+            {{ form_widget(form.card_title) }}
+            {{ form_widget(form.card_subtitle) }}
+            {{ form_widget(form.card_body) }}
+            {{ form_row(form.card_image) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Save
+        </button>
+        {{ form_end(form) }}
+    </section>
+
+    <script src="{{ asset('js/card/edit.js') }}"></script>
+{% endblock content %}

@@ -2,6 +2,7 @@
     width: 6.35cm
     height: 8.89cm
     border-radius: 0.5cm
+    overflow: hidden
 
     background-color: #fff
     border: 1px solid var(--color-border)
@@ -29,3 +30,26 @@
 
         &:hover
             border: 1px solid var(--color-success)
+
+    &.--edit
+        margin: auto
+        min-width: unset
+    
+    input, textarea
+        margin: 0
+        width: 100%
+        max-width: unset
+        border: none
+        border-bottom: 1px dotted black
+        background-color: unset
+
+        &[type="file"]
+            display: none
+
+    label.card_image
+        display: flex
+        height: 100%
+        width: 100%
+        justify-content: center
+        align-items: center
+        text-align: center

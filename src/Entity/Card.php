@@ -29,7 +29,7 @@ class Card
     private ?string $card_title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $card_subtitlte = null;
+    private ?string $card_subtitle = null;
 
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $card_body = null;
@@ -95,14 +95,14 @@ class Card
         return $this;
     }
 
-    public function getCardSubtitlte(): ?string
+    public function getCardSubtitle(): ?string
     {
-        return $this->card_subtitlte;
+        return $this->card_subtitle;
     }
 
-    public function setCardSubtitlte(?string $card_subtitlte): static
+    public function setCardSubtitle(?string $card_subtitle): static
     {
-        $this->card_subtitlte = $card_subtitlte;
+        $this->card_subtitle = $card_subtitle;
 
         return $this;
     }
