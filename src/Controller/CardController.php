@@ -72,8 +72,10 @@ final class CardController extends AbstractController
                     // Handle exception if something happens during file upload
                 }
 
+                $relativePath = 'uploads/images/' . $newFilename;
+
                 // Set the image path in the entity
-                $card->setCardImage($newFilename);
+                $card->setCardImage($relativePath);
             }
             
             // Save the card

@@ -20,11 +20,13 @@ class CardType extends AbstractType
                 'attr' => [
                     'class' => 'form-control ' . $field, // Add a class with the field name
                 ],
+                'required' => $field == 'name' ? true : false, // Make name required, others optional
             ]);
         }
 
         // Make the card_body field a textarea
         $builder->add('card_body', TextareaType::class, [
+            'required' => false,
             'attr' => [
                 'class' => 'form-control card_body', // Add a class for styling
                 'placeholder' => 'Enter the card body here...', // Optional: Add a placeholder

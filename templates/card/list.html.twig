@@ -13,11 +13,7 @@
             <a class="card --add" href="{{ path('app_card_add') }}"></a>
 
             {% for card in cards %}
-                <div class="card">
-                    <h2>
-                        card
-                    </h2>
-                </div>
+                {% include('card/card.html.twig') with { 'card': card } %}
             {% endfor %}
         </div>
     </section>

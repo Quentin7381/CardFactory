@@ -1,0 +1,20 @@
+{% if card %}
+    <div class="card card-style-default">
+        <p class="card_title">
+            {{ card.getCardTitle() }}
+        </p>
+        <p class="card_subtitle">
+            {{ card.getCardSubtitle() }}
+        </p>
+        <p class="card_body">
+            {{ card.getCardBody() }}
+        </p>
+        <div class="card_image">
+            {% if card.getCardImage() %}
+                
+                <img src="{{ card.getCardImage() }}" alt="Card image not found">
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+        
