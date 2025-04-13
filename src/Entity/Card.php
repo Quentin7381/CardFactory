@@ -14,20 +14,28 @@ class Card
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $name = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $path = null;
 
 
     #[ORM\ManyToOne(inversedBy: 'cards')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cards')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Template $template = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $template = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $card_title = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $card_subtitlte = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $card_body = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $card_image = null;
 
     public function __construct()
     {
@@ -51,18 +59,6 @@ class Card
         return $this;
     }
 
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): static
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
     public function getAuthor(): ?User
     {
         return $this->author;
@@ -75,14 +71,62 @@ class Card
         return $this;
     }
 
-    public function getTemplate(): ?Template
+    public function getTemplate(): ?string
     {
         return $this->template;
     }
 
-    public function setTemplate(?Template $template): static
+    public function setTemplate(?string $template): static
     {
         $this->template = $template;
+
+        return $this;
+    }
+
+    public function getCardTitle(): ?string
+    {
+        return $this->card_title;
+    }
+
+    public function setCardTitle(?string $card_title): static
+    {
+        $this->card_title = $card_title;
+
+        return $this;
+    }
+
+    public function getCardSubtitlte(): ?string
+    {
+        return $this->card_subtitlte;
+    }
+
+    public function setCardSubtitlte(?string $card_subtitlte): static
+    {
+        $this->card_subtitlte = $card_subtitlte;
+
+        return $this;
+    }
+
+    public function getCardBody(): ?string
+    {
+        return $this->card_body;
+    }
+
+    public function setCardBody(?string $card_body): static
+    {
+        $this->card_body = $card_body;
+
+        return $this;
+    }
+
+    public function getCardImage(): ?string
+    {
+        return $this->card_image;
+    }
+
+    public function setCardImage(?string $card_image): static
+    {
+        $this->card_image = $card_image;
 
         return $this;
     }
