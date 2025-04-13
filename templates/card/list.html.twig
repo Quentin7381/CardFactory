@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    My cards
+{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>
+            My cards
+        </h1>
+        <div class="card-list flex">
+            <a class="card --add" href=""></a>                
+            {% for card in cards %}
+                <div class="card">
+                    <h2>
+                        card
+                    </h2>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

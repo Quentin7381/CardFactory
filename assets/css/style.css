@@ -42,6 +42,7 @@
   --font-family-text: Roboto, sans-serif;
   --font-family-heading: Montserrat, sans-serif;
   --font-family-special: Audiowide, cursive;
+  --font-family-font-awesome: Font Awesome 5 Free;
 }
 
 :root {
@@ -249,6 +250,13 @@ section.full-screen {
   flex: 1 1 calc(50% - 32px);
 }
 
+.flex {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
 .alert {
   padding: 8px 16px;
   background-color: var(--color-info-light);
@@ -402,4 +410,34 @@ input {
 }
 label {
   display: block;
+}
+
+.card {
+  width: 6.35cm;
+  height: 8.89cm;
+  border-radius: 0.5cm;
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+}
+.card.--add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card.--add::before {
+  content: "+";
+  font-size: 64px;
+  font-family: var(--font-family-font-awesome);
+  color: var(--color-success);
+  border-radius: 50%;
+  border: 1px solid var(--color-success);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.card.--add:hover {
+  border: 1px solid var(--color-success);
 }/*# sourceMappingURL=style.css.map */

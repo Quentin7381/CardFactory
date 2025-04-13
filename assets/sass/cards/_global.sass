@@ -1,0 +1,31 @@
+.card
+    width: 6.35cm
+    height: 8.89cm
+    border-radius: 0.5cm
+
+    background-color: #fff
+    border: 1px solid var(--color-border)
+
+    &.--add 
+        // border: 1px solid var(--color-success)
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &::before
+            content: "\2b"
+            font-size: 64px
+            font-family: var(--font-family-font-awesome)
+            color: var(--color-success)
+            border-radius: 50%
+            border: 1px solid var(--color-success)
+            width: 64px
+            height: 64px
+
+            display: flex
+            justify-content: center
+            align-items: center
+            text-align: center
+
+        &:hover
+            border: 1px solid var(--color-success)
