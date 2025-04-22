@@ -39,6 +39,13 @@ $color-palette: map-merge($color-palette, (
         darker-1: #dd5300,
         darker-2: #753516
     ),
+    red: (
+        base: #e63946,
+        lighter-1: #ff6b6b,
+        lighter-2: #ffafaf,
+        darker-1: #d62839,
+        darker-2: #9a031e
+    ),
 ));
 
 // ----- COLORS BY USE ----- //
@@ -50,6 +57,9 @@ $color: (
     secondary: map-get(map-get($color-palette, blue), base),
     secondary-light: map-get(map-get($color-palette, blue), lighter-1),
     secondary-dark: map-get(map-get($color-palette, blue), darker-1),
+
+    text: black,
+    text-light: map-get(map-get($color-palette, gray), darker-1),
 
     background: map-get(map-get($color-palette, gray), base),
     background-light: map-get(map-get($color-palette, gray), lighter-2),

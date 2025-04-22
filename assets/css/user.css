@@ -1,0 +1,11 @@
+.address {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+}
+.address label {
+  font-weight: bold;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: unset;
+}/*# sourceMappingURL=user.css.map */

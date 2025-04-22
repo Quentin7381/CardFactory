@@ -4,6 +4,44 @@
     My Account
 {% endblock %}
 
-{% block content %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/css/user.css') }}">
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/user.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <section class="center-box center-box-xl">
+        <h1>{{ user.username }}</h1>
+        <p class="subtitle">{{ user.email }}</p>
+        <h2>My address</h2>
+        <div class="address">
+            <label>First name:</label>
+            <span>{{ user.address.firstName }}</span>
+            <label>Last name:</label>
+            <span>{{ user.address.lastName }}</span>
+            <label>Country:</label>
+            <span>{{ user.address.country }}</span>
+            <label>State:</label>
+            <span>{{ user.address.state }}</span>
+            <label>City:</label>
+            <span>{{ user.address.city }}</span>
+            <label>Postal code:</label>
+            <span>{{ user.address.postal }}</span>
+            <label>Street:</label>
+            <span>{{ user.address.addressLine1 }}</span>
+            <label></label>
+            <span>{{ user.address.addressLine2 }}</span>
+            <label></label>
+            <span>{{ user.address.addressLine3 }}</span>
+        </div>
+        <div class="actions flex">
+            <a href="{{ path('app_user_account_edit') }}" class="button thin">Edit</a>
+            <a href="{{ path('app_logout') }}" class="button thin danger">Logout</a>
+        </div>
+    </section>
 {% endblock %}

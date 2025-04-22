@@ -6,6 +6,8 @@
   --color-secondary: #00bcff;
   --color-secondary-light: #4dd0ff;
   --color-secondary-dark: #002633;
+  --color-text: black;
+  --color-text-light: #161616;
   --color-background: #6e6e6e;
   --color-background-light: #f1f1f1;
   --color-background-dark: #161616;
@@ -24,8 +26,8 @@
   --color-warning-light: #fffae6;
   --color-warning-dark: #332900;
   --color-danger: #e63946;
-  --color-danger-light: #fdebed;
-  --color-danger-dark: #33060a;
+  --color-danger-light: #ffafaf;
+  --color-danger-dark: #d62839;
   --color-light: #f1f1f1;
   --color-dark: #161616;
 }
