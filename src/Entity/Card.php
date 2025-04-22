@@ -131,6 +131,8 @@ class Card
         return $this;
     }
 
+    // ----- CUSTOM METHODS -----
+
     public function getPrice(): ?int
     {
         $prices = [
@@ -138,5 +140,19 @@ class Card
         ];
 
         return $prices[$this->template] ?? $prices['default'];
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'author' => $this->author->getUsername(),
+            'template' => $this->template,
+            'card_title' => $this->card_title,
+            'card_subtitle' => $this->card_subtitle,
+            'card_body' => $this->card_body,
+            'card_image' => $this->card_image,
+        ];
     }
 }

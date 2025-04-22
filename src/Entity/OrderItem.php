@@ -17,16 +17,16 @@ class OrderItem
     private ?int $price = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Label = null;
+    private ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $ReferencedEntityType = null;
+    private ?string $referencedEntityType = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $ReferencedEntityId = null;
+    private ?int $referencedEntityId = null;
 
     #[ORM\Column(length: 1025, nullable: true)]
-    private ?string $ReferencedEntityData = null;
+    private ?string $referencedEntityData = null;
 
     #[ORM\ManyToOne(inversedBy: 'OrderItems')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,48 +51,48 @@ class OrderItem
 
     public function getLabel(): ?string
     {
-        return $this->Label;
+        return $this->label;
     }
 
-    public function setLabel(string $Label): static
+    public function setLabel(string $label): static
     {
-        $this->Label = $Label;
+        $this->label = $label;
 
         return $this;
     }
 
     public function getReferencedEntityType(): ?string
     {
-        return $this->ReferencedEntityType;
+        return $this->referencedEntityType;
     }
 
-    public function setReferencedEntityType(?string $ReferencedEntityType): static
+    public function setReferencedEntityType(?string $referencedEntityType): static
     {
-        $this->ReferencedEntityType = $ReferencedEntityType;
+        $this->referencedEntityType = $referencedEntityType;
 
         return $this;
     }
 
     public function getReferencedEntityId(): ?int
     {
-        return $this->ReferencedEntityId;
+        return $this->referencedEntityId;
     }
 
-    public function setReferencedEntityId(?int $ReferencedEntityId): static
+    public function setReferencedEntityId(?int $referencedEntityId): static
     {
-        $this->ReferencedEntityId = $ReferencedEntityId;
+        $this->referencedEntityId = $referencedEntityId;
 
         return $this;
     }
 
     public function getReferencedEntityData(): ?string
     {
-        return $this->ReferencedEntityData;
+        return $this->referencedEntityData;
     }
 
-    public function setReferencedEntityData(?string $ReferencedEntityData): static
+    public function setReferencedEntityData(?string $referencedEntityData): static
     {
-        $this->ReferencedEntityData = $ReferencedEntityData;
+        $this->referencedEntityData = $referencedEntityData;
 
         return $this;
     }
@@ -113,19 +113,19 @@ class OrderItem
     {
         $class = get_class($relatedEntity);
         $id = $relatedEntity->getId();
-        $data = $relatedEntity->serialize();
+        $data = $relatedEntity->toArray();
 
         if (empty($id) || (!is_numeric($id) && !is_string($id))) {
             throw new \InvalidArgumentException('The related entity getId() method must return a valid id.');
         }
 
         if (empty($data) || !is_array($data)) {
-            throw new \InvalidArgumentException('The related entity serialize() method must return a valid array.');
+            throw new \InvalidArgumentException('The related entity _toArray() method must return a valid array.');
         }
 
-        $this->ReferencedEntityType = $class;
-        $this->ReferencedEntityId = $id;
-        $this->ReferencedEntityData = json_encode($data);
+        $this->referencedEntityType = $class;
+        $this->referencedEntityId = $id;
+        $this->referencedEntityData = json_encode($data);
 
         return $this;
     }

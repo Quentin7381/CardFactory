@@ -1,9 +1,5 @@
 {% if card %}
-    {% if editable is defined and editable %}
-    <a class="card card-style-default" href="{{ path('app_card_edit', { id: card.id }) }}">
-    {% else %}
     <div class="card card-style-default">
-    {% endif %}
 
         <p class="card_title">
             {{ card.getCardTitle() }}
@@ -20,11 +16,16 @@
                 <img src="{{ card.getCardImage() }}" alt="Card image not found">
             {% endif %}
         </div>
-
-    {% if editable is defined and editable%}
-    </a>
-    {% else %}
+        <nav class="card_actions">
+            {% if editable is defined and editable %}
+            <a class="nav__link round" href="{{ path('app_card_edit', { id: card.id }) }}">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+            {% endif %}
+            <a class="nav__link round" href="{{ path('app_card_add_to_cart', { id: card.id }) }}">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+        </nav>
     </div>
-    {% endif %}
 {% endif %}
         

@@ -6,6 +6,8 @@ use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\OrderItem;
+use App\Entity\Card;
+use App\Entity\User;
 
 /**
  * @extends ServiceEntityRepository<Order>
@@ -17,6 +19,27 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    public function getCartByUser(User $user){
+        $cart = $this->createQueryBuilder('o')
+            ->andWhere('o.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('o.status = :status')
+            ->setParameter('status', 'cart')
+            ->getQuery()
+            ->getResult();
+            
+        if (empty($cart)) {
+            $cart = new Order();
+            $cart->setUser($user);
+            $cart->setStatus("cart");
+            $this->getEntityManager()->persist($cart);
+            $this->getEntityManager()->flush();
+            return $cart;
+        }
+
+        return $cart[0];
+    }
+
     public function orderAddItem(Order $order, string $label, int $price, ?object $entity = null): Order
     {
         $orderItem = new OrderItem();
@@ -26,8 +49,18 @@ class OrderRepository extends ServiceEntityRepository
             $orderItem->setReferencedEntity($entity);
         }
         $orderItem->setRelatedOrder($order);
-        $this->_em->persist($orderItem);
-        $this->_em->flush();
+        $this->getEntityManager()->persist($orderItem);
+        $this->getEntityManager()->flush();
+
+        return $order;
+    }
+
+    public function orderAddCard(Order $order, Card $card): Order
+    {
+        $price = $card->getPrice();
+        $label = $card->getName();
+
+        $this->orderAddItem($order, $label, $price, $card);
 
         return $order;
     }

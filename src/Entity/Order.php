@@ -17,21 +17,21 @@ class Order
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Status = null;
+    private ?string $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $User = null;
+    private ?User $user = null;
 
     /**
      * @var Collection<int, OrderItem>
      */
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'relatedOrder', orphanRemoval: true)]
-    private Collection $OrderItems;
+    private Collection $orderItems;
 
     public function __construct()
     {
-        $this->OrderItems = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -41,24 +41,24 @@ class Order
 
     public function getStatus(): ?string
     {
-        return $this->Status;
+        return $this->status;
     }
 
-    public function setStatus(string $Status): static
+    public function setStatus(string $status): static
     {
-        $this->Status = $Status;
+        $this->status = $status;
 
         return $this;
     }
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?User $User): static
+    public function setUser(?User $user): static
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }
@@ -68,13 +68,13 @@ class Order
      */
     public function getOrderItems(): Collection
     {
-        return $this->OrderItems;
+        return $this->orderItems;
     }
 
     public function addOrderItem(OrderItem $orderItem): static
     {
-        if (!$this->OrderItems->contains($orderItem)) {
-            $this->OrderItems->add($orderItem);
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems->add($orderItem);
             $orderItem->setRelatedOrder($this);
         }
 
@@ -83,7 +83,7 @@ class Order
 
     public function removeOrderItem(OrderItem $orderItem): static
     {
-        if ($this->OrderItems->removeElement($orderItem)) {
+        if ($this->orderItems->removeElement($orderItem)) {
             // set the owning side to null (unless already changed)
             if ($orderItem->getRelatedOrder() === $this) {
                 $orderItem->setRelatedOrder(null);

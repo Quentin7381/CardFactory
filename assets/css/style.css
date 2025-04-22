@@ -473,6 +473,7 @@ fieldset {
   overflow: hidden;
   background-color: #fff;
   border: 1px solid var(--color-border);
+  position: relative;
 }
 .card.--add {
   display: flex;
@@ -511,9 +512,6 @@ fieldset {
 .card input[type=file], .card textarea[type=file] {
   display: none;
 }
-.card input:hover, .card textarea:hover {
-  border: 1px solid var(--color-primary);
-}
 .card div:has(.card_image) {
   width: 100%;
 }
@@ -529,6 +527,27 @@ fieldset {
 }
 .card label.card_image:hover {
   border: 1px solid var(--color-primary);
+}
+.card_actions {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.card_actions .nav__link {
+  margin: 0;
+}
+.card:hover .card_actions {
+  opacity: 1;
 }
 
 a.card {

@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Entity\Order;
 
 final class CardController extends AbstractController
 {
@@ -146,5 +147,29 @@ final class CardController extends AbstractController
         return $this->render('card/edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/cards/addToCart/{id}', name: 'app_card_add_to_cart')]
+    public function addToCart(Card $card): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'You must be logged in to view this page.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Get the order repository
+        $orderRepository = $this->entityManager->getRepository(Order::class);
+
+        $cart = $orderRepository->getCartByUser($user);
+        $orderRepository->orderAddCard($cart, $card);
+        
+        $this->entityManager->persist($cart);
+        $this->entityManager->flush();
+        $this->addFlash('success', 'Card added to cart successfully!');
+
+        // Redirect to the cart page
+        return $this->redirectToRoute('app_card_list');
     }
 }
