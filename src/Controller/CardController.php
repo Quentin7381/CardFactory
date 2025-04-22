@@ -172,4 +172,26 @@ final class CardController extends AbstractController
         // Redirect to the cart page
         return $this->redirectToRoute('app_card_list');
     }
+
+    #[Route('/cards/delete/{id}', name: 'app_card_delete')]
+    public function delete(Card $card): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'You must be logged in to view this page.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($card->getAuthor() !== $user) {
+            throw $this->createAccessDeniedException('You do not have permission to delete this card.');
+        }
+
+        // Remove the card
+        $this->entityManager->remove($card);
+        $this->entityManager->flush();
+
+        // Redirect to the list page
+        return $this->redirectToRoute('app_card_list');
+    }
 }
