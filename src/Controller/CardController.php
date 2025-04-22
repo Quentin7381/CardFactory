@@ -107,7 +107,9 @@ final class CardController extends AbstractController
         }
 
         // Get the form
-        $form = $this->createForm(CardType::class, $card);
+        $form = $this->createForm(CardType::class, $card, [
+            'image_url' => $card->getCardImage(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -18,9 +18,9 @@ class CardType extends AbstractType
         foreach ($fields as $field) {
             $builder->add($field, null, [
                 'attr' => [
-                    'class' => 'form-control ' . $field, // Add a class with the field name
+                    'class' => 'form-control ' . $field,
                 ],
-                'required' => $field == 'name' ? true : false, // Make name required, others optional
+                'required' => $field == 'name' ? true : false,
             ]);
         }
 
@@ -28,21 +28,22 @@ class CardType extends AbstractType
         $builder->add('card_body', TextareaType::class, [
             'required' => false,
             'attr' => [
-                'class' => 'form-control card_body', // Add a class for styling
-                'placeholder' => 'Enter the card body here...', // Optional: Add a placeholder
+                'class' => 'form-control card_body',
+                'placeholder' => 'Enter the card description here...',
             ],
         ]);
 
         // Make the card_image field a file upload
         $builder->add('card_image', FileType::class, [
             'label' => 'Upload Image',
-            'mapped' => false, // This tells Symfony not to map this field directly to the entity
+            'mapped' => false,
             'required' => false,
             'attr' => [
-                'class' => 'form-control card_image', // Add a class for styling
+                'class' => 'form-control card_image',
+                'data-image' => $options['image_url'] ?? '',
             ],
             'label_attr' => [
-                'class' => 'card_image', // Add a class for the label
+                'class' => 'card_image',
             ],
         ]);
     }
@@ -51,6 +52,7 @@ class CardType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Card::class,
+            'image_url' => null,
         ]);
     }
 }

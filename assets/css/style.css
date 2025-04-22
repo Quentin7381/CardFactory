@@ -514,10 +514,14 @@ fieldset {
 .card input:hover, .card textarea:hover {
   border: 1px solid var(--color-primary);
 }
+.card div:has(.card_image) {
+  width: 100%;
+}
 .card label.card_image {
   display: flex;
   height: 100%;
   width: 100%;
+  min-width: 100%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -549,13 +553,14 @@ a.card:hover {
   gap: 0;
 }
 .card.card-style-default p, .card.card-style-default input, .card.card-style-default textarea {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   background-color: var(--color-card-background-main);
   color: var(--color-card-font-main);
   padding: 4px;
   margin: 0;
 }
 .card.card-style-default .card_title {
+  font-size: var(--font-size-sm);
   font-weight: bold;
   height: 24px;
   order: 1;

@@ -27,4 +27,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    if(fileInput.dataset.image) {
+        let imagePath = fileInput.dataset.image;
+        // Append initial '/' if missing
+        if (imagePath.charAt(0) !== '/') {
+            imagePath = '/' + imagePath;
+        }
+        console.log(imagePath);
+        // If there's a pre-existing image, set it as the label's background
+        label.style.backgroundImage = `url(${imagePath})`;
+        label.style.backgroundSize = 'cover';
+        label.style.backgroundPosition = 'center';
+        label.style.backgroundRepeat = 'no-repeat';
+        label.textContent = ''; // Hide the label's text
+    }
 });
