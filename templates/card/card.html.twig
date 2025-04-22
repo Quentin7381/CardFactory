@@ -1,5 +1,10 @@
 {% if card %}
+    {% if editable is defined and editable %}
+    <a class="card card-style-default" href="{{ path('app_card_edit', { id: card.id }) }}">
+    {% else %}
     <div class="card card-style-default">
+    {% endif %}
+
         <p class="card_title">
             {{ card.getCardTitle() }}
         </p>
@@ -15,6 +20,11 @@
                 <img src="{{ card.getCardImage() }}" alt="Card image not found">
             {% endif %}
         </div>
+
+    {% if editable is defined and editable%}
+    </a>
+    {% else %}
     </div>
+    {% endif %}
 {% endif %}
         

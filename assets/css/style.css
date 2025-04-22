@@ -478,6 +478,15 @@ label {
   border: 1px solid var(--color-primary);
 }
 
+a.card {
+  color: black;
+}
+a.card:hover {
+  text-decoration: none;
+  color: black !important;
+  outline: 2px solid var(--color-primary);
+}
+
 .card.card-style-default {
   --color-card-background-main: #f9f6e2;
   --color-card-background-second: #731211;

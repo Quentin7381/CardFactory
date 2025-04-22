@@ -13,8 +13,7 @@
             <a class="card --add" href="{{ path('app_card_add') }}"></a>
 
             {% for card in cards %}
-                {% include('card/card.html.twig') with { 'card': card } %}
+                {% include('card/card.html.twig') with { 'card': card , 'editable': true } %}
             {% endfor %}
-        </div>
     </section>
 {% endblock %}
