@@ -130,4 +130,13 @@ class Card
 
         return $this;
     }
+
+    public function getPrice(): ?int
+    {
+        $prices = [
+            'default' => 500,
+        ];
+
+        return $prices[$this->template] ?? $prices['default'];
+    }
 }
