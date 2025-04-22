@@ -1,5 +1,5 @@
-{% set account_link = app.user ? path('app_logout') : path('app_login') %}
-{% set account_icon = app.user ? 'fa-solid fa-right-from-bracket' : 'fa-solid fa-user' %}
+{% set account_link = app.user ? path('app_user_account') : path('app_login') %}
+{% set account_icon = app.user ? 'fa-solid fa-user' : 'fa-solid fa-right-to-bracket' %}
 
 
 <header class="header">

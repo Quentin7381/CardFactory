@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    My Account
+{% endblock %}
+
+{% block content %}
+    <section>
+        {{ form_start(form) }}
+        <fieldset>
+        <h3>My account</h3>
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword) }}
+        </fieldset>
+        <fieldset>
+            <h3>My address</h3>
+            {{ form_widget(form.address) }}
+        </fieldset>
+        <input type="submit" class="button" value="Update">
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

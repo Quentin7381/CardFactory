@@ -49,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Card::class, mappedBy: 'author')]
     private Collection $cards;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Address $Address = null;
+
     public function __construct()
     {
         $this->shared_cards = new ArrayCollection();
@@ -171,6 +174,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $card->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->Address;
+    }
+
+    public function setAddress(?Address $Address): static
+    {
+        $this->Address = $Address;
 
         return $this;
     }

@@ -3,12 +3,13 @@ form
     flex-direction: column
     margin: auto
     gap: 8px
+    width: fit-content
 
     &.columns.columns-2
         max-width: unset
 
     button, .button
-        margin: 16px 0
+        margin: 16px auto
         width: 380px
         max-width: 380px
 
@@ -25,12 +26,16 @@ form
         padding: 8px 16px
         border-radius: 4px
 
+    div
+        width: fit-content
+
 input, textarea
     padding: 8px
     display: block
     margin-bottom: 8px
     width: 380px
     max-width: 380px
+    font-size: var(--font-size-sm)
 
     &[type="text"], &[type="email"], &[type="password"]
 
@@ -40,4 +45,14 @@ input, textarea
 
 label
     display: block
+    width: 380px
+    max-width: 380px
+
+fieldset
+    display: flex
+    flex-direction: column
+    margin: auto
+    gap: 8px
+    padding: 0
+    border: none
         
