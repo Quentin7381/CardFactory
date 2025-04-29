@@ -109,11 +109,11 @@ class OrderItem
         return $this;
     }
 
-    public function setReferencedEntity(object $relatedEntity): static
+    public function setReferencedEntity(\App\Entity\Interface\OrderableInterface $relatedEntity): static
     {
         $class = get_class($relatedEntity);
         $id = $relatedEntity->getId();
-        $data = $relatedEntity->toArray();
+        $data = $relatedEntity->toOrderArray();
 
         if (empty($id) || (!is_numeric($id) && !is_string($id))) {
             throw new \InvalidArgumentException('The related entity getId() method must return a valid id.');

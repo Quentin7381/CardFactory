@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
-class Card
+class Card implements \App\Entity\Interface\OrderableInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -142,7 +142,7 @@ class Card
         return $prices[$this->template] ?? $prices['default'];
     }
 
-    public function toArray(): array
+    public function toOrderArray(): array
     {
         return [
             'id' => $this->id,
