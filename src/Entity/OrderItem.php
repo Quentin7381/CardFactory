@@ -144,4 +144,9 @@ class OrderItem
 
         return $this;
     }
+
+    public function getTotalPrice(): int
+    {
+        return $this->price * $this->quantity;
+    }
 }

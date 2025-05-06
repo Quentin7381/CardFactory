@@ -14,6 +14,7 @@
   --color-background-second: #002633;
   --color-background-second-light: #4dd0ff;
   --color-background-second-dark: #e6f8ff;
+  --color-border: #6e6e6e;
   --color-cta: #dd5300;
   --color-cta-hover: #f4661b;
   --color-success: #2ecc71;
@@ -295,6 +296,14 @@ section section, section .section, .section section, .section .section {
   flex-wrap: wrap;
 }
 
+.float-right {
+  margin-left: auto;
+}
+.float-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .alert {
   padding: 8px 16px;
   background-color: var(--color-info-light);
@@ -315,6 +324,31 @@ section section, section .section, .section section, .section .section {
 .alert-info {
   background-color: var(--color-info-light);
   color: var(--color-info-dark);
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+table th, table td {
+  border: 1px solid var(--color-border);
+  padding: 4px;
+}
+table th {
+  background-color: var(--color-background-dark);
+  color: white;
+  font-weight: normal;
+}
+table.table-striped tr:nth-child(odd) {
+  background-color: var(--color-background-light);
+}
+table input {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  background-color: transparent;
 }
 
 :root {

@@ -18,17 +18,8 @@ class OrderItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('label', TextType::class, [
-                'label' => 'Label',
-                'attr' => ['readonly' => true], // Makes the field non-editable
-            ])
             ->add('quantity', IntegerType::class, [
                 'label' => 'Quantity',
-            ])
-            ->add('price', NumberType::class, [
-                'label' => 'Unit Price',
-                'attr' => ['readonly' => true], // Makes the field non-editable
-                'scale' => 2, // Optional: to specify decimal precision
             ]);
     }
 

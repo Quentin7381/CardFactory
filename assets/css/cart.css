@@ -1,0 +1,6 @@
+body table.cart-table td:nth-child(3) {
+  text-align: right;
+}
+body table.cart-table tr:last-child td:nth-child(2) {
+  text-align: right;
+}/*# sourceMappingURL=cart.css.map */

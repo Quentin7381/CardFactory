@@ -94,4 +94,13 @@ class Order
 
         return $this;
     }
+
+    public function getTotalPrice(): int
+    {
+        $total = 0;
+        foreach ($this->orderItems as $item) {
+            $total += $item->getTotalPrice();
+        }
+        return $total;
+    }
 }

@@ -68,6 +68,8 @@ $color: (
     background-second-light: map-get(map-get($color-palette, blue), lighter-1),
     background-second-dark: map-get(map-get($color-palette, blue), lighter-2),
 
+    border: map-get(map-get($color-palette, gray), base),
+
     cta: map-get(map-get($color-palette, orange), darker-1),
     cta-hover: map-get(map-get($color-palette, orange), base),
 

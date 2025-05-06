@@ -1,4 +1,8 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+    {{ parent() }}
+{% endblock %}
 
 {% block title %}
     My Cart
@@ -9,10 +13,39 @@
     <h1>My Cart</h1>
         <div class="columns columns-2">
         <div class="section center-box">
-            <h2>Items in Cart</h2>
-            {{ dump(order.orderItems) }}
-            {{form_start(form)}}
-            {{ form_widget(form) }}
+            <h2>My Cart</h2>
+            <table class="table table-striped cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ form_start(form) }}
+                    {% for orderItemForm in form.orderItems %}
+                        {% set orderItem = orderItemForm.vars.value %}
+                        <tr>
+                            <td>
+                                {{ orderItem.label }}
+                            </td>
+                            <td>
+                                {{ form_widget(orderItemForm.quantity, { 'attr': { 'class': 'table-span' } }) }}
+                            </td>
+                            <td>
+                                {{ orderItem.price|number_format(2, '.', '') }} $
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td>
+                            {{order.getTotalPrice()|number_format(2, '.', '')}} $
+                        </td>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary float-right">Update Cart</button>
             {{ form_end(form) }}
         </div>
         <div class="section center-box">
