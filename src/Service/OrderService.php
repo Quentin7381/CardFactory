@@ -84,6 +84,15 @@ class OrderService
         return $order;
     }
 
+    public function complete(Order $order): Order
+    {
+        $order->setStatus('completed');
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
+
+        return $order;
+    }
+
     # ------ ORDER INTEGRITY ------ #
 
     public function checkOrder(Order $order)

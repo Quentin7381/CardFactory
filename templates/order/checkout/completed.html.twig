@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    Payment Informations
+{% endblock %}
+
+{% block content %}
+    <section class="center-box">
+        <h1>Thank you for your order!</h1>
+        <p>Your order has been successfully placed.</p>
+        <p>You can view your order details in <a href="{{ path('app_order_history') }}">My Orders</a>.</p>
+    </section>
+{% endblock %}

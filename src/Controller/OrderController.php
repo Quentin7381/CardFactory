@@ -69,4 +69,38 @@ class OrderController extends AbstractController {
         return $this->redirectToRoute('app_cart');
     }
 
+    #[Route('/cart/checkout', name: 'app_checkout')]
+    public function checkout(){
+        // Redirect to payment
+        return $this->redirectToRoute('app_checkout_payment');
+    }
+
+    #[Route('/cart/checkout/payment', name: 'app_checkout_payment')]
+    public function checkoutPayment(Request $request) {
+        $user = $this->getUser();
+        if (!$user) {
+            throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You must be logged in to access this page.');
+        }
+
+        $repository = $this->doctrine->getRepository(Order::class);
+        $order = $repository->findOneByUser($user);
+
+        if (!$order) {
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Order not found.');
+        }
+        
+        $this->orderService->complete($order);
+
+        return $this->redirectToRoute('app_checkout_completed');
+    }
+
+    #[Route('/cart/checkout/completed', name: 'app_checkout_completed')]
+    public function checkoutCompleted() {
+        return $this->render('order/checkout/completed.html.twig');
+    }
+
+    #[Route('/user/orders', name: 'app_order_history')]
+    public function orderHistory() {
+        throw new HttpException(Response::HTTP_NOT_FOUND, 'Not implemented yet.');
+    }
 }
