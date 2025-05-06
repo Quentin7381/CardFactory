@@ -10,43 +10,50 @@
 
 {% block content %}
 <section>
-    <h1>My Cart</h1>
         <div class="columns columns-2">
         <div class="section center-box">
             <h2>My Cart</h2>
-            <table class="table table-striped cart-table">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{ form_start(form) }}
-                    {% for orderItemForm in form.orderItems %}
-                        {% set orderItem = orderItemForm.vars.value %}
+            {% if form.orderItems is not empty %}
+                {{ form_start(form) }}
+                <table class="table table-striped cart-table">
+                    <thead>
                         <tr>
-                            <td>
-                                {{ orderItem.label }}
-                            </td>
-                            <td>
-                                {{ form_widget(orderItemForm.quantity, { 'attr': { 'class': 'table-span' } }) }}
-                            </td>
-                            <td>
-                                {{ orderItem.price|number_format(2, '.', '') }} $
-                            </td>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
                         </tr>
-                    {% endfor %}
-                    <tr>
-                        <td colspan="2">Total</td>
-                        <td>
-                            {{order.getTotalPrice()|number_format(2, '.', '')}} $
-                        </td>
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary float-right">Update Cart</button>
-            {{ form_end(form) }}
+                    </thead>
+                    <tbody>
+                        {% for orderItemForm in form.orderItems %}
+                            {% set orderItem = orderItemForm.vars.value %}
+                            <tr>
+                                <td>
+                                    {{ orderItem.label }}
+                                </td>
+                                <td>
+                                    {{ form_widget(orderItemForm.quantity, { 'attr': { 'class': 'table-span' } }) }}
+                                </td>
+                                <td>
+                                    {{ orderItem.price|number_format(2, '.', '') }} $
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="2">Total</td>
+                            <td>
+                                {{order.getTotalPrice()|number_format(2, '.', '')}} $
+                            </td>
+                    </tbody>
+                </table>
+                <div class="form-actions">                
+                    <a class="button danger" href="{{ path('app_cart_reset') }}">Reset Cart</a>
+                    <button type="submit" class="btn btn-primary">Update Cart</button>
+                </div>
+                {{ form_end(form) }}
+            {% else %}
+                <p>Your cart is empty.</p>
+                <p>You can add items to your cart from your <a href="{{ path('app_card_list') }}">card page</a>.</p>
+            {% endif %}
         </div>
         <div class="section center-box">
             <h2>Shipping Address</h2>

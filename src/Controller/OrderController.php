@@ -13,7 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController {
 
     public function __construct(
-        private readonly \Doctrine\Persistence\ManagerRegistry $doctrine
+        private readonly \Doctrine\Persistence\ManagerRegistry $doctrine,
+        private readonly \App\Service\OrderService $orderService,
     ) {
     }
 
@@ -47,6 +48,25 @@ class OrderController extends AbstractController {
             'order' => $order,
             'user' => $user,
         ]);
+    }
+
+    #[Route('/cart/reset', name: 'app_cart_reset')]
+    public function resetCart(Request $request) {
+        $user = $this->getUser();
+        if (!$user) {
+            throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You must be logged in to access this page.');
+        }
+
+        $repository = $this->doctrine->getRepository(Order::class);
+        $order = $repository->findOneByUser($user);
+
+        if ($order) {
+            $this->orderService->orderReset($order);
+            $this->doctrine->getManager()->persist($order);
+            $this->doctrine->getManager()->flush();
+        }
+
+        return $this->redirectToRoute('app_cart');
     }
 
 }

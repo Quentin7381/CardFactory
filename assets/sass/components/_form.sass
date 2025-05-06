@@ -3,7 +3,7 @@ form
     flex-direction: column
     margin: auto
     gap: 8px
-    width: fit-content
+    // width: 100%
 
     &.columns.columns-2
         max-width: unset
@@ -28,6 +28,29 @@ form
 
     div
         width: fit-content
+
+    .form-actions
+        width: 100%
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        justify-content: right
+        gap: 8px
+
+        > *
+            flex: 1 1 1
+            width: fit-content
+            margin: 0
+
+    table
+        width: 100%
+
+        input
+            width: 100%
+            max-width: 100%
+            margin: 0
+            border: none
+            background-color: transparent
 
 input, textarea
     padding: 8px

@@ -74,6 +74,16 @@ class OrderService
         return $order;
     }
 
+    public function orderReset(Order $order): Order
+    {
+        foreach ($order->getOrderItems() as $item) {
+            $this->entityManager->remove($item);
+        }
+        $this->entityManager->flush();
+
+        return $order;
+    }
+
     # ------ ORDER INTEGRITY ------ #
 
     public function checkOrder(Order $order)

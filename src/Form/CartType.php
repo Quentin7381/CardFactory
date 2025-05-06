@@ -19,6 +19,7 @@ class CartType extends AbstractType
                 'entry_options' => ['label' => false],
                 'allow_delete' => true,
                 'by_reference' => false,
+                'label' => false,
             ]);
     }
     public function configureOptions(OptionsResolver $resolver): void
