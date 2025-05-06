@@ -101,6 +101,22 @@ class OrderController extends AbstractController {
 
     #[Route('/user/orders', name: 'app_order_history')]
     public function orderHistory() {
+        $user = $this->getUser();
+        if (!$user) {
+            throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You must be logged in to access this page.');
+        }
+
+        $repository = $this->doctrine->getRepository(Order::class);
+        $orders = $repository->findBy(['user' => $user]);
+
+        return $this->render('order/history.html.twig', [
+            'orders' => $orders,
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/user/orders/{id}', name: 'app_order_details')]
+    public function orderDetails($id) {
         throw new HttpException(Response::HTTP_NOT_FOUND, 'Not implemented yet.');
     }
 }

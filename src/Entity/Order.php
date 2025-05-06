@@ -31,6 +31,9 @@ class Order
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'relatedOrder', orphanRemoval: true)]
     private Collection $orderItems;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $placedAt = null;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
@@ -102,5 +105,17 @@ class Order
             $total += $item->getTotalPrice();
         }
         return $total;
+    }
+
+    public function getPlacedAt(): ?\DateTimeImmutable
+    {
+        return $this->placedAt;
+    }
+
+    public function setPlacedAt(\DateTimeImmutable $placedAt): static
+    {
+        $this->placedAt = $placedAt;
+
+        return $this;
     }
 }

@@ -162,7 +162,18 @@ final class CardController extends AbstractController
 
         // Get the order repository
         $orderRepository = $this->entityManager->getRepository(Order::class);
-        $cart = $orderRepository->findOneByUser($user);
+        $cart = $orderRepository->findOneBy([
+            'user' => $user,
+            'status' => 'cart',
+        ]);
+
+        if (!$cart) {
+            // Create a new cart if it doesn't exist
+            $cart = new Order();
+            $cart->setUser($user);
+            $cart->setStatus('cart');
+            $this->entityManager->persist($cart);
+        }
 
         $this->orderService->orderAddCard($cart, $card);
         

@@ -87,6 +87,7 @@ class OrderService
     public function complete(Order $order): Order
     {
         $order->setStatus('completed');
+        $order->setPlacedAt(new \DateTimeImmutable());
         $this->entityManager->persist($order);
         $this->entityManager->flush();
 
