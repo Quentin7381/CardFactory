@@ -25,7 +25,7 @@ class OrderController extends AbstractController {
         }
 
         $repository = $this->doctrine->getRepository(Order::class);
-        $order = $repository->getCartByUser($user);
+        $order = $repository->findOneByUser($user);
         
         if (!$order) {
             $order = new Order();

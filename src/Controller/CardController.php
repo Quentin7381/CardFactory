@@ -19,6 +19,7 @@ final class CardController extends AbstractController
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
+        private readonly \App\Service\OrderService $orderService
     ) {
     }
 
@@ -161,9 +162,9 @@ final class CardController extends AbstractController
 
         // Get the order repository
         $orderRepository = $this->entityManager->getRepository(Order::class);
+        $cart = $orderRepository->findOneByUser($user);
 
-        $cart = $orderRepository->getCartByUser($user);
-        $orderRepository->orderAddCard($cart, $card);
+        $this->orderService->orderAddCard($cart, $card);
         
         $this->entityManager->persist($cart);
         $this->entityManager->flush();
