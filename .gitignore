@@ -26,3 +26,4 @@
 .vscode/settings.json
 
 public/uploads/
+*.css
