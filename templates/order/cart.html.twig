@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    My Cart
+{% endblock %}
+
+{% block content %}
+<section>
+    <h1>My Cart</h1>
+        <div class="columns columns-2">
+        <div class="section center-box">
+            <h2>Items in Cart</h2>
+            {{ dump(order.orderItems) }}
+            {{form_start(form)}}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="section center-box">
+            <h2>Shipping Address</h2>
+            {{ dump(user) }}
+        </div>
+    </div>
+</section>
+        
+{% endblock %}

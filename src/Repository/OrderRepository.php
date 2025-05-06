@@ -40,7 +40,7 @@ class OrderRepository extends ServiceEntityRepository
         return $cart[0];
     }
 
-    public function orderAddItem(Order $order, string $label, int $price, ?object $entity = null): Order
+    public function orderAddItem(Order $order, string $label, int $price, ?object $entity = null, $quantity = 1): Order
     {
         $orderItem = new OrderItem();
         $orderItem->setLabel($label);
@@ -49,6 +49,7 @@ class OrderRepository extends ServiceEntityRepository
             $orderItem->setReferencedEntity($entity);
         }
         $orderItem->setRelatedOrder($order);
+        $orderItem->setQuantity($quantity);
         $this->getEntityManager()->persist($orderItem);
         $this->getEntityManager()->flush();
 

@@ -19,4 +19,6 @@ interface OrderableInterface
      * @return int
      */
     public function getId(): int|string|null;
+
+    public function getOrderLabel(): string;
 }

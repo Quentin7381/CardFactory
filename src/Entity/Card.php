@@ -155,4 +155,9 @@ class Card implements \App\Entity\Interface\OrderableInterface
             'card_image' => $this->card_image,
         ];
     }
+
+    public function getOrderLabel(): string
+    {
+        return $this->name;
+    }
 }

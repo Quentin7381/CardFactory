@@ -1,7 +1,7 @@
 body 
     height: 100vh
 
-section
+section, .section
     width: 100%
     padding: 32px var(--current-container-side-space)
 
@@ -27,7 +27,10 @@ section
             &-xl
                 min-width: min(100vw, 880px)
             &-xxl
-                min-width: min(100vw, 1080px)  
+                min-width: min(100vw, 1080px)
+
+    section, .section
+        padding: 8px
 
 .columns
     display: flex

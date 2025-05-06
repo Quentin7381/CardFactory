@@ -123,6 +123,9 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   margin-bottom: 0.5em;
 }
+h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:last-child {
+  margin-bottom: 0;
+}
 
 p {
   font-weight: normal;
@@ -237,15 +240,15 @@ body {
   height: 100vh;
 }
 
-section {
+section, .section {
   width: 100%;
   padding: 32px var(--current-container-side-space);
 }
-section.full-screen {
+section.full-screen, .section.full-screen {
   height: calc(100vh - var(--header-height));
 }
 @media (min-width: 768.1px) {
-  section.center-box {
+  section.center-box, .section.center-box {
     margin: 32px auto;
     min-width: min(100vw, 380px);
     width: -moz-fit-content;
@@ -256,17 +259,20 @@ section.full-screen {
     box-shadow: var(--shadow-base);
   }
 }
-section.center-box.center-box-ml {
+section.center-box.center-box-ml, .section.center-box.center-box-ml {
   min-width: min(100vw, 480px);
 }
-section.center-box.center-box-lg {
+section.center-box.center-box-lg, .section.center-box.center-box-lg {
   min-width: min(100vw, 680px);
 }
-section.center-box.center-box-xl {
+section.center-box.center-box-xl, .section.center-box.center-box-xl {
   min-width: min(100vw, 880px);
 }
-section.center-box.center-box-xxl {
+section.center-box.center-box-xxl, .section.center-box.center-box-xxl {
   min-width: min(100vw, 1080px);
+}
+section section, section .section, .section section, .section .section {
+  padding: 8px;
 }
 
 .columns {
