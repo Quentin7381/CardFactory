@@ -42,6 +42,9 @@ class Address
 
     #[ORM\Column(length: 255)]
     private ?string $City = null;
+    
+    #[ORM\OneToOne(mappedBy: 'Address', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -164,6 +167,28 @@ class Address
     public function setCity(string $City): static
     {
         $this->City = $City;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setAddress(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getAddress() !== $this) {
+            $user->setAddress($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
