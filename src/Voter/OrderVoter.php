@@ -36,7 +36,7 @@ class OrderVoter extends Voter
             return true;
         }
 
-        $order = $subject instanceof OrderItem ? $subject->getOrder() : $subject;
+        $order = $subject instanceof OrderItem ? $subject->getRelatedOrder() : $subject;
 
         switch ($attribute) {
             case 'EDIT':
