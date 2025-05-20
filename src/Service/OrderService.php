@@ -25,14 +25,14 @@ class OrderService
             ->andWhere('o.user = :user')
             ->setParameter('user', $user)
             ->andWhere('o.status = :status')
-            ->setParameter('status', 'cart')
+            ->setParameter('status', Order::STATUS_CART)
             ->getQuery()
             ->getResult();
 
         if (empty($cart)) {
             $cart = new Order();
             $cart->setUser($user);
-            $cart->setStatus("cart");
+            $cart->setStatus(Order::STATUS_CART);
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
             return $cart;
@@ -86,7 +86,7 @@ class OrderService
 
     public function complete(Order $order): Order
     {
-        $order->setStatus('completed');
+        $order->setStatus(Order::STATUS_COMPLETED);
         $order->setPlacedAt(new \DateTimeImmutable());
         $this->entityManager->persist($order);
         $this->entityManager->flush();

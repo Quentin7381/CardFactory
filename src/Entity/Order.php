@@ -25,6 +25,9 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CART = 'cart';
+
     /**
      * @var Collection<int, OrderItem>
      */
