@@ -30,6 +30,7 @@ class UserController extends AbstractController {
         // if (!$user instanceof User) {
         //     throw new \LogicException('User is not an instance of User entity.');
         // }
+        $this->denyAccessUnlessGranted('VIEW', $user);
 
         // Render the user account page
         return $this->render('user/account.html.twig', [
@@ -50,6 +51,8 @@ class UserController extends AbstractController {
         // if (!$user instanceof User) {
         //     throw new \LogicException('User is not an instance of User entity.');
         // }
+
+        $this->denyAccessUnlessGranted('EDIT', $user);
 
         // Init form
         $form = $this->createForm(UserEditType::class, $user);

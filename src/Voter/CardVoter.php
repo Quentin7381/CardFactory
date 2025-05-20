@@ -1,5 +1,5 @@
 <?php
-namespace App\Security;
+namespace App\Voter;
 
 use App\Entity\Card;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

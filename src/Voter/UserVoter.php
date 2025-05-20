@@ -1,5 +1,5 @@
 <?php
-namespace App\Security;
+namespace App\Voter;
 
 use App\Entity\User;
 use App\Entity\Address;

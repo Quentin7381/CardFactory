@@ -98,15 +98,7 @@ final class CardController extends AbstractController
     public function edit(Request $request, Card $card, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
-
-        if (!$user) {
-            $this->addFlash('error', 'You must be logged in to view this page.');
-            return $this->redirectToRoute('app_login');
-        }
-
-        if ($card->getAuthor() !== $user) {
-            throw $this->createAccessDeniedException('You do not have permission to edit this card.');
-        }
+        $this->denyAccessUnlessGranted('EDIT', $card);
 
         // Get the form
         $form = $this->createForm(CardType::class, $card, [
@@ -154,11 +146,7 @@ final class CardController extends AbstractController
     public function addToCart(Card $card): Response
     {
         $user = $this->getUser();
-
-        if (!$user) {
-            $this->addFlash('error', 'You must be logged in to view this page.');
-            return $this->redirectToRoute('app_login');
-        }
+        $this->denyAccessUnlessGranted('VIEW', $card);
 
         // Get the order repository
         $orderRepository = $this->entityManager->getRepository(Order::class);
@@ -189,15 +177,7 @@ final class CardController extends AbstractController
     public function delete(Card $card): Response
     {
         $user = $this->getUser();
-
-        if (!$user) {
-            $this->addFlash('error', 'You must be logged in to view this page.');
-            return $this->redirectToRoute('app_login');
-        }
-
-        if ($card->getAuthor() !== $user) {
-            throw $this->createAccessDeniedException('You do not have permission to delete this card.');
-        }
+        $this->denyAccessUnlessGranted('DELETE', $card);
 
         // Remove the card
         $this->entityManager->remove($card);

@@ -32,10 +32,13 @@ class OrderController extends AbstractController {
             $order = new Order();
         }
 
+        $this->denyAccessUnlessGranted('VIEW', $order);
+
         $form = $this->createForm(CartType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('EDIT', $order);
             $order = $form->getData();
             $order->setUser($user);
             $order->setStatus('cart');
@@ -56,6 +59,8 @@ class OrderController extends AbstractController {
         if (!$user) {
             throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You must be logged in to access this page.');
         }
+
+        $this->denyAccessUnlessGranted('DELETE', Order::class);
 
         $repository = $this->doctrine->getRepository(Order::class);
         $order = $repository->findOneByUser($user);
@@ -84,10 +89,12 @@ class OrderController extends AbstractController {
 
         $repository = $this->doctrine->getRepository(Order::class);
         $order = $repository->findOneByUser($user);
-
+    
         if (!$order) {
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Order not found.');
         }
+
+        $this->denyAccessUnlessGranted('EDIT', $order);
         
         $this->orderService->complete($order);
 
