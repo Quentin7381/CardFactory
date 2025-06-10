@@ -50,12 +50,10 @@
                                     {{ orderItem.quantity }}
                                 </td>
                                 <td>
-                                    {{ orderItem.price|number_format(2, '.', '') }}
-                                    $
+                                    ${{ orderItem.price|number_format(2, '.', '') }}
                                 </td>
                                 <td>
-                                    {{ orderItem.getTotalPrice()|number_format(2, '.', '') }}
-                                    $
+                                    ${{ orderItem.getTotalPrice()|number_format(2, '.', '') }}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -64,8 +62,7 @@
                                 Total
                             </td>
                             <td>
-                                {{ order.getTotalPrice()|number_format(2, '.', '') }}
-                                $
+                                ${{ order.getTotalPrice()|number_format(2, '.', '') }}
                             </td>
                         </tbody>
                     </table>
