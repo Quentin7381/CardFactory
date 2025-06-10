@@ -26,11 +26,8 @@ class OrderController extends AbstractController {
         }
 
         $repository = $this->doctrine->getRepository(Order::class);
-        $order = $repository->findOneByUser($user);
         
-        if (!$order) {
-            $order = new Order();
-        }
+        $order = $this->orderService->getCartByUser($user);
 
         $this->denyAccessUnlessGranted('VIEW', $order);
 
@@ -63,7 +60,9 @@ class OrderController extends AbstractController {
         $this->denyAccessUnlessGranted('DELETE', Order::class);
 
         $repository = $this->doctrine->getRepository(Order::class);
-        $order = $repository->findOneByUser($user);
+        $order = $this->orderService->getCartByUser($user);
+
+        $this->denyAccessUnlessGranted('EDIT', $order);
 
         if ($order) {
             $this->orderService->orderReset($order);
@@ -88,7 +87,9 @@ class OrderController extends AbstractController {
         }
 
         $repository = $this->doctrine->getRepository(Order::class);
-        $order = $repository->findOneByUser($user);
+        $order = $this->orderService->getCartByUser($user);
+        
+        $this->denyAccessUnlessGranted('EDIT', $order);
     
         if (!$order) {
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Order not found.');

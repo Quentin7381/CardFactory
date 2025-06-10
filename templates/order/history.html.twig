@@ -9,6 +9,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>Order Number</th>
                         <th>Date</th>
                         <th>Total Price</th>
                         <th>Details</th>
@@ -17,6 +18,7 @@
                 <tbody>
                     {% for order in orders %}
                         <tr>
+                            <td>{{ order.orderNumber }}</td>
                             <td>{{ order.placedAt|date('Y-m-d H:i') }}</td>
                             <td>{{ order.getTotalPrice()|number_format(2, '.', '') }} $</td>
                             <td>

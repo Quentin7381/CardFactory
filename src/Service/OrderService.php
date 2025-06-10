@@ -84,10 +84,24 @@ class OrderService
         return $order;
     }
 
+    protected function createOrderNumber(Order $order): string
+    {
+        // Use year + month + 4 digit ID + 3 random letters
+        $date = new \DateTimeImmutable();
+        $year = $date->format('y');
+        $month = $date->format('m');
+        $id = str_pad($order->getId(), 4, '0', STR_PAD_LEFT);
+        $id = substr($id, -4); // Keep only the last 4 digits
+        $letters = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 3);
+
+        return "$year$month-$letters-$id";
+    }
+
     public function complete(Order $order): Order
     {
         $order->setStatus(Order::STATUS_COMPLETED);
         $order->setPlacedAt(new \DateTimeImmutable());
+        $order->setOrderNumber($this->createOrderNumber($order));
         $this->entityManager->persist($order);
         $this->entityManager->flush();
 
@@ -119,7 +133,7 @@ class OrderService
     {
         $items = [];
         foreach ($order->getOrderItems() as $item) {
-            dump($item) ; exit;
+            // TODO implement logic to check for same items
         }
     }
 }

@@ -37,6 +37,9 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $placedAt = null;
 
+    #[ORM\Column(length: 13, nullable: true)]
+    private ?string $orderNumber = null;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
@@ -118,6 +121,18 @@ class Order
     public function setPlacedAt(\DateTimeImmutable $placedAt): static
     {
         $this->placedAt = $placedAt;
+
+        return $this;
+    }
+
+    public function getOrderNumber(): ?string
+    {
+        return $this->orderNumber;
+    }
+
+    public function setOrderNumber(?string $orderNumber): static
+    {
+        $this->orderNumber = $orderNumber;
 
         return $this;
     }
