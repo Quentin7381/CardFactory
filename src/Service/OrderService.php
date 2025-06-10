@@ -134,9 +134,29 @@ class OrderService
 
     public function checkOrder_sameItems(Order $order)
     {
-        $items = [];
-        foreach ($order->getOrderItems() as $item) {
-            // TODO implement logic to check for same items
+        $items = $order->getOrderItems();
+        $items = $items->toArray();
+        $loopBreak = 999;
+        while($items && --$loopBreak > 0) {
+            $item = array_shift($items);
+            if (!$item) {
+                continue;
+            }
+
+            foreach ($items as $key => $compareItem) {
+                if ($this->isSameAs($item, $compareItem)) {
+                    // If they are the same, merge quantities
+                    $item->setQuantity($item->getQuantity() + $compareItem->getQuantity());
+                    $order->removeOrderItem($compareItem);
+                    $this->entityManager->remove($compareItem);
+                    unset($items[$key]);
+                }
+            }
         }
+    }
+
+    protected function isSameAs(OrderItem $item1, OrderItem $item2): bool
+    {
+        return $item1->getReferencedEntityData() === $item2->getReferencedEntityData();
     }
 }
