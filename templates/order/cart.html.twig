@@ -21,6 +21,7 @@
                             <th>Product</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
+                            <th>Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,10 +37,13 @@
                                 <td>
                                     {{ orderItem.price|number_format(2, '.', '') }} $
                                 </td>
+                                <td>
+                                    {{ orderItem.getTotalPrice()|number_format(2, '.', '') }} $
+                                </td>
                             </tr>
                         {% endfor %}
                         <tr>
-                            <td colspan="2">Total</td>
+                            <td colspan="3">Total</td>
                             <td>
                                 {{order.getTotalPrice()|number_format(2, '.', '')}} $
                             </td>
