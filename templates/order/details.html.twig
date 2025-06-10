@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+        {{ parent() }}
+    {% endblock %}
+
+    {% block title %}
+        My Cart
+    {% endblock %}
+
+    {% block content %}
+        <section>
+            <div class="section center-box">
+                <h2>
+                    Your order
+                    <em>
+                        {{ order.orderNumber }}
+                    </em>
+                </h2>
+                <p>
+                    Placed on
+                    <em>
+                        {{ order.placedAt|date('Y-m-d H:i') }}
+                    </em>
+                </p>
+                <table class="table table-striped cart-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Product
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Unit Price
+                            </th>
+                            <th>
+                                Total Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for orderItem in order.orderItems %}
+                            <tr>
+                                <td>
+                                    {{ orderItem.label }}
+                                </td>
+                                <td>
+                                    {{ orderItem.quantity }}
+                                </td>
+                                <td>
+                                    {{ orderItem.price|number_format(2, '.', '') }}
+                                    $
+                                </td>
+                                <td>
+                                    {{ orderItem.getTotalPrice()|number_format(2, '.', '') }}
+                                    $
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3">
+                                Total
+                            </td>
+                            <td>
+                                {{ order.getTotalPrice()|number_format(2, '.', '') }}
+                                $
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    {% endblock %}
+    

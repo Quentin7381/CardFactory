@@ -118,12 +118,15 @@ class OrderService
                 $this->$method($order);
             }
         }
+
+        return $order;
     }
 
     public function checkOrder_quantity(Order $order)
     {
         foreach ($order->getOrderItems() as $item) {
             if ($item->getQuantity() <= 0) {
+                $order->removeOrderItem($item);
                 $this->entityManager->remove($item);
             }
         }

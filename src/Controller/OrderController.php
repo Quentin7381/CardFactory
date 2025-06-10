@@ -41,7 +41,13 @@ class OrderController extends AbstractController {
             $order->setStatus('cart');
             $this->doctrine->getManager()->persist($order);
             $this->doctrine->getManager()->flush();
+
+            // Reset form to prevent bugs
+            $this->addFlash('success', 'Cart updated successfully.');
         }
+
+        $order = $this->orderService->checkOrder($order);
+        $form = $this->createForm(CartType::class, $order); // Recreate form to ensure orders changes are reflected
 
         return $this->render('order/cart.html.twig', [
             'form' => $form->createView(),
@@ -115,7 +121,7 @@ class OrderController extends AbstractController {
         }
 
         $repository = $this->doctrine->getRepository(Order::class);
-        $orders = $repository->findBy(['user' => $user]);
+        $orders = $repository->findBy(['user' => $user, 'status' => Order::STATUS_COMPLETED]);
 
         return $this->render('order/history.html.twig', [
             'orders' => $orders,
@@ -125,6 +131,21 @@ class OrderController extends AbstractController {
 
     #[Route('/user/orders/{id}', name: 'app_order_details')]
     public function orderDetails($id) {
-        throw new HttpException(Response::HTTP_NOT_FOUND, 'Not implemented yet.');
+        $user = $this->getUser();
+        if (!$user) {
+            throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You must be logged in to access this page.');
+        }
+
+        $repository = $this->doctrine->getRepository(Order::class);
+        $order = $repository->find($id);
+
+        if (!$order || $order->getUser() !== $user) {
+            throw new HttpException(Response::HTTP_NOT_FOUND, 'Order not found or you do not have permission to view it.');
+        }
+
+        return $this->render('order/details.html.twig', [
+            'order' => $order,
+            'user' => $user,
+        ]);
     }
 }
