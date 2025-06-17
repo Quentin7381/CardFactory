@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Delete Account
+{% endblock %}
+
+{% block content %}
+    <section class="center-box">
+        <h1>
+            Delete Account
+        </h1>
+        <p>
+            You are about to delete your account, including all your cards, addresses, and orders.
+        </p>
+        <p>
+            Are you sure you want to proceed?
+        </p>
+
+        <form method="post" action="{{ path('app_user_account_delete') }}">
+            <div class="checkbox-container">
+                <label for="confirm_delete">
+                    I want to delete my account and all associated data
+                </label>
+                <input type="checkbox" name="confirm_delete" required id="confirm_delete"></div>
+                <div class="checkbox-container">
+                    <label for="confirm_again">
+                        I understand that this action cannot be undone
+                    </label>
+                    <input type="checkbox" name="confirm_again" required id="confirm_again"></div>
+                    <div class="actions flex">
+                        <a href="{{ path('app_user_account') }}" class="success button thin secondary">
+                            Cancel
+                        </a>
+                        <button type="submit" class="button thin danger">
+                            Delete Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    {% endblock %}
+    

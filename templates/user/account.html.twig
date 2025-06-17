@@ -43,7 +43,8 @@
         {% endif %}
         <div class="actions flex">
             <a href="{{ path('app_user_account_edit') }}" class="button thin">Edit</a>
-            <a href="{{ path('app_logout') }}" class="button thin danger">Logout</a>
+            <a href="{{ path('app_logout') }}" class="button thin warning">Logout</a>
+            <a href="{{ path('app_user_account_delete_confirm') }}" class="button thin danger">Delete Account</a>
         </div>
     </section>
 {% endblock %}

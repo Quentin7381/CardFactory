@@ -61,7 +61,7 @@ class SecurityController extends AbstractController
             }
 
             // Check if terms are accepted
-            if (!$form->get('termsAccepted')->getData()) {
+            if (!$form->get('terms')->getData()) {
                 $this->addFlash('error', 'You must accept the terms and conditions.');
                 return $this->redirectToRoute('register');
             }

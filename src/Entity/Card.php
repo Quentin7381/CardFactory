@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CardRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
 class Card implements \App\Entity\Interface\OrderableInterface
@@ -37,9 +38,37 @@ class Card implements \App\Entity\Interface\OrderableInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $card_image = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'shared_cards')]
+    #[ORM\JoinTable(name: 'card_shared_with')]
+    private Collection $shared_with;
+
     public function __construct()
     {
         $this->shared_with = new ArrayCollection();
+    }
+
+    public function getSharedWith(): Collection
+    {
+        return $this->shared_with;
+    }
+
+    public function addSharedWith(User $user): static
+    {
+        if (!$this->shared_with->contains($user)) {
+            $this->shared_with[] = $user;
+            $user->getSharedCards()->add($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSharedWith(User $user): static
+    {
+        if ($this->shared_with->removeElement($user)) {
+            $user->getSharedCards()->removeElement($this);
+        }
+
+        return $this;
     }
 
     public function getId(): ?int
