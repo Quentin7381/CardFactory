@@ -54,6 +54,18 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Check if the password and confirmation match
+            if ($form->get('plainPassword')->getData() !== $form->get('passwordConfirm')->getData()) {
+                $this->addFlash('error', 'Passwords do not match.');
+                return $this->redirectToRoute('register');
+            }
+
+            // Check if terms are accepted
+            if (!$form->get('termsAccepted')->getData()) {
+                $this->addFlash('error', 'You must accept the terms and conditions.');
+                return $this->redirectToRoute('register');
+            }
+
             // Hash the plain password
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,

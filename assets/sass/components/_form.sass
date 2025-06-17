@@ -60,7 +60,9 @@ input, textarea
     max-width: 380px
     font-size: var(--font-size-sm)
 
-    &[type="text"], &[type="email"], &[type="password"]
+    &[type="checkbox"]
+        width: auto
+        margin: 0
 
     &:focus
         outline: none
@@ -78,3 +80,14 @@ fieldset
     gap: 8px
     padding: 0
     border: none
+
+.checkbox-container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding-right: 32px
+    gap: 12px
+    width: 380px
+
+    label
+        width: auto

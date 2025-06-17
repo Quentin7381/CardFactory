@@ -2,6 +2,11 @@
 
 {% block title %}Register{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/register/passwordMatch.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <section class="center-box">
     <h1>Register</h1>
@@ -10,6 +15,8 @@
         {{ form_row(form.username) }}
         {{ form_row(form.email) }}
         {{ form_row(form.plainPassword) }}
+        {{ form_row(form.passwordConfirm) }}
+        {{ form_row(form.terms) }}
 
         <button type="submit" class="btn btn-primary">Register</button>
         <p>Already have an account? <a href="{{ path('app_login') }}">Login</a></p>

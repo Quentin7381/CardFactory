@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -22,6 +23,14 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Password',
+                'mapped' => false,
+            ])
+            ->add('passwordConfirm', PasswordType::class, [
+                'label' => 'Confirm Password',
+                'mapped' => false,
+            ])
+            ->add('terms', CheckboxType::class, [
+                'label' => 'I accept the terms and conditions',
                 'mapped' => false,
             ])
             // ->add('roles')
