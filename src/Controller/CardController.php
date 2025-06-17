@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Entity\Order;
+use Gumlet\ImageResize;
 
 final class CardController extends AbstractController
 {
@@ -65,18 +66,13 @@ final class CardController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'), // Define this parameter in services.yaml
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // Handle exception if something happens during file upload
-                }
-
-                $relativePath = 'uploads/images/' . $newFilename;
+                // Resize the image if necessary
+                $imageResize = new ImageResize($imageFile->getPathname());
+                $imageResize->resizeToWidth(232);
+                $imageResize->save($this->getParameter('images_directory') . '/' . $newFilename);
 
                 // Set the image path in the entity
+                $relativePath = 'uploads/images/' . $newFilename;
                 $card->setCardImage($relativePath);
             }
 
@@ -114,18 +110,13 @@ final class CardController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
-                try {
-                    $imageFile->move(
-                        $this->getParameter('images_directory'), // Define this parameter in services.yaml
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // Handle exception if something happens during file upload
-                }
+                // Resize the image if necessary
+                $imageResize = new ImageResize($imageFile->getPathname());
+                $imageResize->resizeToWidth(464);
+                $imageResize->save($this->getParameter('images_directory') . '/' . $newFilename);
 
+                // Set the image path in the entity
                 $relativePath = 'uploads/images/' . $newFilename;
-
-                // Set the new image path in the entity
                 $card->setCardImage($relativePath);
             }
 
@@ -164,7 +155,7 @@ final class CardController extends AbstractController
         }
 
         $this->orderService->orderAddCard($cart, $card);
-        
+
         $this->entityManager->persist($cart);
         $this->entityManager->flush();
         $this->addFlash('success', 'Card added to cart successfully!');
