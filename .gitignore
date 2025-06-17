@@ -27,3 +27,4 @@
 
 public/uploads/
 *.css
+*.css.map

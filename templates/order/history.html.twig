@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/order-history.css') }}">
+{% endblock %}
+
 {% block content %}
     <section>
         <h1>My Orders</h1>
