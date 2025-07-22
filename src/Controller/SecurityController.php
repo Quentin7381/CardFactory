@@ -136,10 +136,10 @@ class SecurityController extends AbstractController
             'iss' => 'your-issuer', // Issuer of the token
             'iat' => time(), // Issued at: time when the token was generated
             'exp' => time() + 3600, // Expiration time: 1 hour later
-            'sub' => $user->getId(), // Subject: user ID
+            'uid' => $user->getId(), // Subject: user ID
         ];
 
-        $jwt = \Firebase\JWT\JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+        $jwt = \Firebase\JWT\JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256', '1');
         if (!$jwt) {
             return $this->json(['error' => 'Failed to generate token'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
