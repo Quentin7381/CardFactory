@@ -14,6 +14,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\UserRepository;
 use App\Service\JWTService;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SecurityController extends AbstractController
 {
@@ -50,8 +53,12 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface $tokenStorage
+    ): Response {
         if ($this->getUser()) {
             $this->addFlash('info', 'You are already logged in.');
             return $this->redirectToRoute('home');
@@ -83,10 +90,12 @@ class SecurityController extends AbstractController
             }
 
             // Password has at least one uppercase letter, one lowercase letter, one number and a special character
-            if (!preg_match('/[A-Z]/', $password) ||
+            if (
+                !preg_match('/[A-Z]/', $password) ||
                 !preg_match('/[a-z]/', $password) ||
                 !preg_match('/[0-9]/', $password) ||
-                !preg_match('/[\W_]/', $password)) {
+                !preg_match('/[\W_]/', $password)
+            ) {
                 $form->get('plainPassword')->addError(new FormError('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'));
             }
 
@@ -108,7 +117,11 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Redirect or log in the user
+            // Log the user in
+            $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
+            $tokenStorage->setToken($token);
+
+            // Redirect user
             return $this->redirectToRoute('home');
         }
 
