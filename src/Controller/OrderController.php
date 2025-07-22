@@ -92,16 +92,19 @@ class OrderController extends AbstractController {
             throw new HttpException(Response::HTTP_UNAUTHORIZED, 'You must be logged in to access this page.');
         }
 
+        // Prevent user from accessing this page if they do not own the order
         $repository = $this->doctrine->getRepository(Order::class);
-        $order = $this->orderService->getCartByUser($user);
-        
-        $this->denyAccessUnlessGranted('EDIT', $order);
-    
+        $order = $this->orderService->getCartByUser($user);    
         if (!$order) {
             throw new HttpException(Response::HTTP_NOT_FOUND, 'Order not found.');
         }
-
         $this->denyAccessUnlessGranted('EDIT', $order);
+
+        // Prevent user from accessing this page if their adress is not filled
+        if (!$user->getAddress()) {
+            $this->addFlash('error', 'You must fill your address before proceeding to payment.');
+            return $this->redirectToRoute('app_cart');
+        }
         
         $this->orderService->complete($order);
 

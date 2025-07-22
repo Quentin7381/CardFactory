@@ -61,7 +61,31 @@
         </div>
         <div class="section center-box">
             <h2>Shipping Address</h2>
-            {{ dump(user) }}
+            {% if user.address %}
+                <p><strong>First Name:</strong> {{ user.address.firstName }}</p>
+                <p><strong>Last Name:</strong> {{ user.address.lastName }}</p>
+                <p><strong>Country:</strong> {{ user.address.country }}</p>
+                {% if user.address.state %}
+                    <p><strong>State:</strong> {{ user.address.state }}</p>
+                {% endif %}
+                <p><strong>City:</strong> {{ user.address.city }}</p>
+                <p><strong>Zip Code:</strong> {{ user.address.postal }}</p>
+                <p><strong>Street:</strong> <br> {{ user.address.addressLine1 }}
+                {% if user.address.addressLine2 %}
+                    <br> {{ user.address.addressLine2 }}
+                {% endif %}
+                {% if user.address.addressLine3 %}
+                    <br> {{ user.address.addressLine3 }}
+                {% endif %}
+                </p>
+                {% if user.address.additionalInformation %}
+                    <p><strong>Additional Info:</strong> {{ user.address.additionalInformation }}</p>
+                {% endif %}
+                <a class="button" href="{{ path('app_user_account_edit') }}">Edit Address</a>
+            {% else %}
+                <p>You need an address to proceed to checkout.</p>
+                <a class="button" href="{{ path('app_user_account_edit') }}">Set Address</a>
+            {% endif %}
         </div>
         <a class="button success" href="{{ path('app_checkout') }}">Checkout</a>
     </div>
