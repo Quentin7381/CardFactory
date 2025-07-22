@@ -58,11 +58,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user')]
     private Collection $orders;
 
+    /**
+     * @var Collection<int, JWT>
+     */
+    #[ORM\OneToMany(targetEntity: JWT::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $JWTs;
+
     public function __construct()
     {
         $this->shared_cards = new ArrayCollection();
         $this->cards = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->JWTs = new ArrayCollection();
     }
 
     public function getUsername(): string
@@ -221,6 +228,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($order->getUser() === $this) {
                 $order->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, JWT>
+     */
+    public function getJWTs(): Collection
+    {
+        return $this->JWTs;
+    }
+
+    public function addJWT(JWT $jWT): static
+    {
+        if (!$this->JWTs->contains($jWT)) {
+            $this->JWTs->add($jWT);
+            $jWT->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJWT(JWT $jWT): static
+    {
+        if ($this->JWTs->removeElement($jWT)) {
+            // set the owning side to null (unless already changed)
+            if ($jWT->getUser() === $this) {
+                $jWT->setUser(null);
             }
         }
 

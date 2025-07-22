@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\UserRepository;
+use App\Service\JWTService;
 
 class SecurityController extends AbstractController
 {
@@ -94,8 +95,9 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/api/login', name: 'api_login')]
-    public function apiLogin(Request $request) {
-        
+    public function apiLogin(Request $request, JWTService $jtiService): Response
+    {
+
         // Decode JSON request
         $json = $request->getContent();
         $data = json_decode($json, true);
@@ -106,7 +108,7 @@ class SecurityController extends AbstractController
         // Extract email and password
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
-        if(!is_string($email) || !is_string($password)) {
+        if (!is_string($email) || !is_string($password)) {
             return $this->json(['error' => 'Email and password must be provided as strings'], Response::HTTP_BAD_REQUEST);
         }
 
@@ -132,22 +134,12 @@ class SecurityController extends AbstractController
         }
 
         // Generate JWT token using firebase/php-jwt
-        $payload = [
-            'iss' => 'your-issuer', // Issuer of the token
-            'iat' => time(), // Issued at: time when the token was generated
-            'exp' => time() + 3600, // Expiration time: 1 hour later
-            'uid' => $user->getId(), // Subject: user ID
-        ];
+        $jwt = $jtiService->generateJWT($user->getId());
 
-        $jwt = \Firebase\JWT\JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256', '1');
-        if (!$jwt) {
-            return $this->json(['error' => 'Failed to generate token'], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        // Return stub
+        // Return
         return $this->json([
             'message' => 'Login successful',
-            'user' => $this->getUser() ? $this->getUser()->getUsername() : null,
+            'user' => $user->getId(),
             'token' => $jwt,
         ]);
     }
