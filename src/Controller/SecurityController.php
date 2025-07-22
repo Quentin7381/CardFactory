@@ -11,9 +11,16 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Repository\UserRepository;
 
 class SecurityController extends AbstractController
 {
+    public function __construct(
+        private readonly UserRepository $userRepository,
+
+    ) {
+    }
+
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -83,6 +90,65 @@ class SecurityController extends AbstractController
 
         return $this->render('security/register.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/api/login', name: 'api_login')]
+    public function apiLogin(Request $request) {
+        
+        // Decode JSON request
+        $json = $request->getContent();
+        $data = json_decode($json, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $this->json(['error' => 'Invalid JSON'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Extract email and password
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+        if(!is_string($email) || !is_string($password)) {
+            return $this->json(['error' => 'Email and password must be provided as strings'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Check if username and password are provided
+        if (!$email || !$password) {
+            return $this->json(['error' => "email and password are required"], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Load user
+        $user = $this->userRepository->findOneBy(['email' => $email]);
+        if (!$user) {
+            return $this->json(['error' => 'Invalid username or password'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        // Check password
+        if (!password_verify($password, $user->getPassword())) {
+            return $this->json(['error' => 'Invalid username or password'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        // Check role
+        if (!in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->json(['error' => 'You do not have permission to access this resource'], Response::HTTP_FORBIDDEN);
+        }
+
+        // Generate JWT token using firebase/php-jwt
+        $payload = [
+            'iss' => 'your-issuer', // Issuer of the token
+            'iat' => time(), // Issued at: time when the token was generated
+            'exp' => time() + 3600, // Expiration time: 1 hour later
+            'sub' => $user->getId(), // Subject: user ID
+        ];
+
+        $jwt = \Firebase\JWT\JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+        if (!$jwt) {
+            return $this->json(['error' => 'Failed to generate token'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        // Return stub
+        return $this->json([
+            'message' => 'Login successful',
+            'user' => $this->getUser() ? $this->getUser()->getUsername() : null,
+            'token' => $jwt,
         ]);
     }
 }
