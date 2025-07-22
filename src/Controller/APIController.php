@@ -6,11 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\Form\UserEditType;
 use App\Entity\User;
 use Firebase\JWT\Key;
 use Firebase\JWT\JWT;
+use App\Service\SalesStatsService;
 
 
 class APIController extends AbstractController {
@@ -21,8 +20,8 @@ class APIController extends AbstractController {
     }
 
     #[Route('/api/sales', name: 'api_sales', methods: ['GET'])]
-    public function sales(Request $request){
-        // Get JWT token from the request header
+    public function sales(Request $request, SalesStatsService $salesStatsService): Response{
+        // Get JWT token fromsub the request header
         $token = $request->headers->get('Authorization');
         if (!$token || !str_starts_with($token, 'Bearer ')) {
             return $this->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
@@ -40,7 +39,6 @@ class APIController extends AbstractController {
             ];
             $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'), $headers);
         } catch (\Exception $e) {
-            throw new \Exception('Invalid token: ' . $e->getMessage());
             return $this->json(['error' => 'Invalid token'], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -50,7 +48,7 @@ class APIController extends AbstractController {
         }
 
         // Retrieve the user from the database
-        $user = $this->doctrine->getRepository(User::class)->find($decoded->sub);
+        $user = $this->doctrine->getRepository(User::class)->find($decoded->uid);
         if (!$user) {
             return $this->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
@@ -60,14 +58,19 @@ class APIController extends AbstractController {
             return $this->json(['error' => 'Access denied'], Response::HTTP_FORBIDDEN);
         }
 
-        return $this->json([
-            'detail' => [
-                // Example sales data
-                ['id' => 1, 'amount' => 100, 'date' => '2023-10-01'],
-                ['id' => 2, 'amount' => 200, 'date' => '2023-10-02'],
-            ],
-            'total' => 300,
-            'count' => 2,
-        ]);
+        // Get eventual date start and end from query parameters
+        $dateStart = $request->query->get('dateStart') ?: null;
+        $dateEnd = $request->query->get('dateEnd') ?: null;
+
+        // Use SalesStatsService to get sales data
+        return $this->json(
+            $salesStatsService->getSalesStats(
+                $dateStart ? new \DateTimeImmutable($dateStart) : null,
+                $dateEnd ? new \DateTimeImmutable($dateEnd) : null
+            ),
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'sales_stats']
+        );
     }
 }
