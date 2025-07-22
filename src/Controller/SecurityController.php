@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Repository\UserRepository;
 use App\Service\JWTService;
+use Symfony\Component\Form\FormError;
 
 class SecurityController extends AbstractController
 {
@@ -30,7 +31,6 @@ class SecurityController extends AbstractController
             $this->addFlash('info', 'You are already logged in.');
             return $this->redirectToRoute('home');
         }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -62,16 +62,39 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Check if the password and confirmation match
-            if ($form->get('plainPassword')->getData() !== $form->get('passwordConfirm')->getData()) {
-                $this->addFlash('error', 'Passwords do not match.');
-                return $this->redirectToRoute('register');
-            }
 
             // Check if terms are accepted
             if (!$form->get('terms')->getData()) {
-                $this->addFlash('error', 'You must accept the terms and conditions.');
-                return $this->redirectToRoute('register');
+                $form->get('terms')->addError(new FormError('You must accept the terms and conditions.'));
+            }
+            // Check if the password and confirmation match
+            if ($form->get('plainPassword')->getData() !== $form->get('passwordConfirm')->getData()) {
+                $this->addFlash('error', 'Passwords do not match.');
+            }
+
+            $password = $form->get('plainPassword')->getData();
+
+            // Password is longer than 8 characters
+            if (strlen($password) < 8) {
+                $form->get('plainPassword')->addError(new FormError('Password must be at least 8 characters long.'));
+                return $this->render('security/register.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
+            // Password has at least one uppercase letter, one lowercase letter, one number and a special character
+            if (!preg_match('/[A-Z]/', $password) ||
+                !preg_match('/[a-z]/', $password) ||
+                !preg_match('/[0-9]/', $password) ||
+                !preg_match('/[\W_]/', $password)) {
+                $form->get('plainPassword')->addError(new FormError('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'));
+            }
+
+            // Check if form has errors
+            if ($form->isSubmitted() && !$form->isValid()) {
+                return $this->render('security/register.html.twig', [
+                    'form' => $form->createView(),
+                ]);
             }
 
             // Hash the plain password
