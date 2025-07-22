@@ -156,6 +156,10 @@ class UserController extends AbstractController {
         // Add a success message
         $this->addFlash('success', 'Your account has been deleted successfully.');
 
+        // Log the user out
+        $tokenStorage = $this->container->get('security.token_storage');
+        $tokenStorage->setToken(null);
+
         // Redirect to the homepage
         return $this->redirectToRoute('home');
     }
