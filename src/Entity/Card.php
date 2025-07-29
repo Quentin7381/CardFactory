@@ -24,9 +24,6 @@ class Card implements \App\Entity\Interface\OrderableInterface
     private ?User $author = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $template = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $card_title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -41,6 +38,10 @@ class Card implements \App\Entity\Interface\OrderableInterface
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'shared_cards')]
     #[ORM\JoinTable(name: 'card_shared_with')]
     private Collection $shared_with;
+
+    #[ORM\ManyToOne(inversedBy: 'card')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Template $template = null;
 
     public function __construct()
     {
@@ -96,18 +97,6 @@ class Card implements \App\Entity\Interface\OrderableInterface
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
-
-        return $this;
-    }
-
-    public function getTemplate(): ?string
-    {
-        return $this->template;
-    }
-
-    public function setTemplate(?string $template): static
-    {
-        $this->template = $template;
 
         return $this;
     }
@@ -188,5 +177,17 @@ class Card implements \App\Entity\Interface\OrderableInterface
     public function getOrderLabel(): string
     {
         return $this->name;
+    }
+
+    public function getTemplate(): ?Template
+    {
+        return $this->template;
+    }
+
+    public function setTemplate(?Template $template): static
+    {
+        $this->template = $template;
+
+        return $this;
     }
 }

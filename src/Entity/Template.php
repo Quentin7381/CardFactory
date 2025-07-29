@@ -18,18 +18,18 @@ class Template
     #[ORM\Column(length: 255)]
     private ?string $css_class = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $background_image = null;
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     /**
      * @var Collection<int, Card>
      */
     #[ORM\OneToMany(targetEntity: Card::class, mappedBy: 'template', orphanRemoval: true)]
-    private Collection $cards;
+    private Collection $card;
 
     public function __construct()
     {
-        $this->cards = new ArrayCollection();
+        $this->card = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,18 +49,30 @@ class Template
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Card>
      */
-    public function getCards(): Collection
+    public function getCard(): Collection
     {
-        return $this->cards;
+        return $this->card;
     }
 
     public function addCard(Card $card): static
     {
-        if (!$this->cards->contains($card)) {
-            $this->cards->add($card);
+        if (!$this->card->contains($card)) {
+            $this->card->add($card);
             $card->setTemplate($this);
         }
 
@@ -69,7 +81,7 @@ class Template
 
     public function removeCard(Card $card): static
     {
-        if ($this->cards->removeElement($card)) {
+        if ($this->card->removeElement($card)) {
             // set the owning side to null (unless already changed)
             if ($card->getTemplate() === $this) {
                 $card->setTemplate(null);

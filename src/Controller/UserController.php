@@ -127,6 +127,7 @@ class UserController extends AbstractController {
         $orders = $user->getOrders();
         $cards = $user->getCards();
         $address = $user->getAddress();
+        $jwts = $user->getJWTs();
         $orderItems = [];
         foreach ($orders as $order) {
             foreach ($order->getOrderItems() as $item) {
@@ -147,6 +148,11 @@ class UserController extends AbstractController {
         }
         foreach ($orderItems as $item) {
             $entityManager->remove($item);
+        }
+
+        // Remove eventual JWTs API tokens
+        foreach ($jwts as $jwt) {
+            $entityManager->remove($jwt);
         }
 
         // Remove the user from the database
