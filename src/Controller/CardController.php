@@ -86,6 +86,14 @@ final class CardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // Reset image if template changed
+            $template = $form->get('template')->getData()->getId();
+            $oldTemplate = $form->get('old_template')->getData();
+            if ($template && (!$oldTemplate || $template !== $oldTemplate)) {
+                $card->setCardImage(null);
+            }
+
             $imageFile = $form->get('card_image')->getData();
             $cardService->attachImageToCard($imageFile, $card);
 

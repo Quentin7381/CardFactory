@@ -63,6 +63,26 @@ class CardType extends AbstractType
                 return ['data-css-class' => $template->getCssClass()];
             },
         ]);
+
+        // Store old template for data change check
+        $card = $builder->getData();
+        $template = $card ? $card->getTemplate() : null;
+
+        if ($template) {
+            $builder->add('old_template', null, [
+                'data' => $template->getId(),
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-control old-template',
+                    'style' => 'display:none;',
+                ],
+                'label' => false,
+                'disabled' => true,
+                'row_attr' => [
+                    'style' => 'display:none;', // Hide the entire container
+                ],
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
