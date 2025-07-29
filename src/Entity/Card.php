@@ -157,7 +157,7 @@ class Card implements \App\Entity\Interface\OrderableInterface
             'default' => 500,
         ];
 
-        return $prices[$this->template] ?? $prices['default'];
+        return $prices[$this->template->getCssClass()] ?? $prices['default'];
     }
 
     public function toOrderArray(): array
