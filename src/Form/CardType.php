@@ -59,6 +59,9 @@ class CardType extends AbstractType
                 'class' => 'form-control template-select',
             ],
             'label' => false,
+            'choice_attr' => function (Template $template) {
+                return ['data-css-class' => $template->getCssClass()];
+            },
         ]);
     }
 

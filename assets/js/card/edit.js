@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    
+    // ----- IMAGE UPLOAD ----- //
+    
     const fileInput = document.querySelector('input.card_image'); // Select the file input
     const label = document.querySelector('label.card_image'); // Select the label associated with the input
 
@@ -41,5 +44,39 @@ document.addEventListener('DOMContentLoaded', function () {
         label.style.backgroundPosition = 'center';
         label.style.backgroundRepeat = 'no-repeat';
         label.textContent = ''; // Hide the label's text
+    }
+
+    // ----- THEME CHANGE ----- //
+
+    let themeSelect = document.querySelector('select.template-select');
+    let card = document.querySelector('.card');
+
+    if(themeSelect && card) {
+        themeSelect.addEventListener('change', function () {
+            const selectedOption = themeSelect.selectedOptions[0];
+            const cssClass = selectedOption.dataset.cssClass;
+            console.log('Selected CSS Class:', cssClass);
+        
+            card.classList.forEach(className => {
+                if (className.startsWith('card-style-')) {
+                    card.classList.remove(className);
+                }
+            });
+    
+            // Add the new card-style class
+            if (cssClass) {
+                card.classList.add(`card-style-${cssClass}`);
+            }
+
+            // Remove eventual image to force a new upload
+            const imageInput = document.querySelector('input.card_image');
+            if (imageInput) {
+                imageInput.value = ''; // Clear the file input
+                label.style.backgroundImage = ''; // Reset the label's background image
+                label.textContent = 'Upload Image'; // Reset the label text
+            }
+        });
+    } else {
+        console.error("Couldn't retrieve theme selector. Auto theme update disabled.");
     }
 });
