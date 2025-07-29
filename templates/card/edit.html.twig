@@ -5,13 +5,18 @@
 {% endblock %}
 
 {% block content %}
+
+    {% set style = form.template.vars.data is not null ? form.template.vars.data.cssClass : 'default' %}
+
     <section class="center-box">
         <nav></nav>
         {{ form_start(form) }}
         {{ form_errors(form) }}
 
         {{ form_row(form.name) }}
-        <div class="card --edit card-style-default">
+        {{ form_row(form.template) }}
+
+        <div class="card --edit card-style-{{ style }}">
             {{ form_widget(form.card_title) }}
             {{ form_widget(form.card_subtitle) }}
             {{ form_widget(form.card_body) }}

@@ -1,0 +1,56 @@
+.card.card-style-large
+
+    width: 7cm
+    height: 12cm
+
+    --color-card-background-main: #f9f6e2
+    --color-card-background-second: #731211
+    --color-card-font-main: black
+    --color-card-font-second: white
+    --color-card-border: #731211
+
+    background-color: var(--color-card-background-second)
+    border: 4px solid var(--color-card-border)
+    
+    display: flex
+    flex-direction: column
+    gap: 0
+
+    p, input, textarea
+        font-size: var(--font-size-xs)
+        background-color: var(--color-card-background-main)
+        color: var(--color-card-font-main)
+        padding: 4px
+        margin: 0
+
+    .card_title
+        font-size: var(--font-size-sm)
+        font-weight: bold
+        height: 1cm
+        order: 1
+        background-color: var(--color-card-background-second)
+        color: var(--color-card-font-second)
+
+    .card_subtitle
+        font-weight: bold
+        height: 1cm
+        order: 3
+        background-color: var(--color-card-background-second)
+        color: var(--color-card-font-second)
+
+    .card_image, div:has(.card_image)
+        background-color: white
+        height: 5cm
+        order: 2
+
+        img
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+
+    .card_body
+        background-color: #f9f6e2
+        padding: 4px
+        height: 5cm
+        order: 4

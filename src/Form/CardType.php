@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Template;
 
 class CardType extends AbstractType
 {
@@ -46,6 +48,18 @@ class CardType extends AbstractType
                 'class' => 'card_image',
             ],
         ]);
+
+        // Add a select field for Template entity
+        $builder->add('template', EntityType::class, [
+            'class' => Template::class,
+            'choice_label' => 'name',
+            'placeholder' => 'Select a Template',
+            'required' => true,
+            'attr' => [
+                'class' => 'form-control template-select',
+            ],
+            'label' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -53,6 +67,7 @@ class CardType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Card::class,
             'image_url' => null,
+
         ]);
     }
 }

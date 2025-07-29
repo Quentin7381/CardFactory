@@ -1,5 +1,8 @@
 {% if card %}
-    <div class="card card-style-default">
+
+    {% set style = card.template is not null ? card.template.cssClass : 'default' %}
+
+    <div class="card card-style-{{ style }}">
 
         <p class="card_title">
             {{ card.getCardTitle() }}

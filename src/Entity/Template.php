@@ -27,6 +27,12 @@ class Template
     #[ORM\OneToMany(targetEntity: Card::class, mappedBy: 'template', orphanRemoval: true)]
     private Collection $card;
 
+    #[ORM\Column]
+    private ?int $imageWidth = null;
+
+    #[ORM\Column]
+    private ?int $imageHeight = null;
+
     public function __construct()
     {
         $this->card = new ArrayCollection();
@@ -87,6 +93,30 @@ class Template
                 $card->setTemplate(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageWidth(): ?int
+    {
+        return $this->imageWidth;
+    }
+
+    public function setImageWidth(int $imageWidth): static
+    {
+        $this->imageWidth = $imageWidth;
+
+        return $this;
+    }
+
+    public function getImageHeight(): ?int
+    {
+        return $this->imageHeight;
+    }
+
+    public function setImageHeight(int $imageHeight): static
+    {
+        $this->imageHeight = $imageHeight;
 
         return $this;
     }
