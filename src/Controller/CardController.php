@@ -7,13 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Card;
 use App\Form\CardType;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Entity\Order;
-use Gumlet\ImageResize;
+use App\Service\CardService;
 
 final class CardController extends AbstractController
 {
@@ -42,7 +39,7 @@ final class CardController extends AbstractController
     }
 
     #[Route('/cards/add', name: 'app_card_add')]
-    public function add(Request $request, SluggerInterface $slugger): Response
+    public function add(Request $request, CardService $cardService): Response
     {
         $user = $this->getUser();
 
@@ -60,21 +57,7 @@ final class CardController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('card_image')->getData();
-
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
-                // Resize the image if necessary
-                $imageResize = new ImageResize($imageFile->getPathname());
-                $imageResize->resizeToWidth(232);
-                $imageResize->save($this->getParameter('images_directory') . '/' . $newFilename);
-
-                // Set the image path in the entity
-                $relativePath = 'uploads/images/' . $newFilename;
-                $card->setCardImage($relativePath);
-            }
+            $cardService->attachImageToCard($imageFile, $card);
 
             // Save the card
             $this->entityManager->persist($card);
@@ -91,7 +74,7 @@ final class CardController extends AbstractController
     }
 
     #[Route('/cards/edit/{id}', name: 'app_card_edit')]
-    public function edit(Request $request, Card $card, SluggerInterface $slugger): Response
+    public function edit(Request $request, Card $card, CardService $cardService): Response
     {
         $user = $this->getUser();
         $this->denyAccessUnlessGranted('EDIT', $card);
@@ -104,21 +87,7 @@ final class CardController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('card_image')->getData();
-
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
-                // Resize the image if necessary
-                $imageResize = new ImageResize($imageFile->getPathname());
-                $imageResize->resizeToWidth(464);
-                $imageResize->save($this->getParameter('images_directory') . '/' . $newFilename);
-
-                // Set the image path in the entity
-                $relativePath = 'uploads/images/' . $newFilename;
-                $card->setCardImage($relativePath);
-            }
+            $cardService->attachImageToCard($imageFile, $card);
 
             // Save the card
             $this->entityManager->flush();
