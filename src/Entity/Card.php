@@ -29,7 +29,7 @@ class Card implements \App\Entity\Interface\OrderableInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $card_subtitle = null;
 
-    #[ORM\Column(length: 1000, nullable: true)]
+    #[ORM\Column(length: 4095, nullable: true)]
     private ?string $card_body = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -155,6 +155,7 @@ class Card implements \App\Entity\Interface\OrderableInterface
     {
         $prices = [
             'default' => 500,
+            'large' => 750,
         ];
 
         return $prices[$this->template->getCssClass()] ?? $prices['default'];
@@ -166,7 +167,7 @@ class Card implements \App\Entity\Interface\OrderableInterface
             'id' => $this->id,
             'name' => $this->name,
             'author' => $this->author->getUsername(),
-            'template' => $this->template,
+            'template' => $this->template->toOrderArray(),
             'card_title' => $this->card_title,
             'card_subtitle' => $this->card_subtitle,
             'card_body' => $this->card_body,

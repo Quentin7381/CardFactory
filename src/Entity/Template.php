@@ -120,4 +120,15 @@ class Template
 
         return $this;
     }
+
+    public function toOrderArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'css_class' => $this->getCssClass(),
+            'name' => $this->getName(),
+            'imageWidth' => $this->getImageWidth(),
+            'imageHeight' => $this->getImageHeight(),
+        ];
+    }
 }
