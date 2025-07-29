@@ -26,7 +26,7 @@
                     </thead>
                     <tbody>
                         {% for orderItemForm in form.orderItems %}
-                            {% set orderItem = orderItemForm.vars.value %}
+                            {% set orderItem = orderItemForm.vars.value %} / 100)
                             <tr>
                                 <td>
                                     {{ orderItem.label }}
@@ -35,17 +35,17 @@
                                     {{ form_widget(orderItemForm.quantity, { 'attr': { 'class': 'table-span' } }) }}
                                 </td>
                                 <td>
-                                    ${{ orderItem.price|number_format(2, '.', '') }}
+                                    ${{ (orderItem.price / 100)|number_format(2, '.', '') }}
                                 </td>
                                 <td>
-                                    ${{ orderItem.getTotalPrice()|number_format(2, '.', '') }}
+                                    ${{ (orderItem.getTotalPrice() / 100)|number_format(2, '.', '') }}
                                 </td>
                             </tr>
                         {% endfor %}
                         <tr>
                             <td colspan="3">Total</td>
                             <td>
-                                ${{order.getTotalPrice()|number_format(2, '.', '')}}
+                                ${{(order.getTotalPrice() / 100)|number_format(2, '.', '')}}
                             </td>
                     </tbody>
                 </table>
