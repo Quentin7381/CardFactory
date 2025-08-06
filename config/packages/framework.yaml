@@ -6,8 +6,7 @@ framework:
     session: true
 
     assets:
-        version: '1.0'
-        base_path: ''
+        version: null
 
     #esi: true
     #fragments: true

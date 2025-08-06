@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Denied{% endblock %}
+
+{% block content %}
+<section class="center-box ">
+    <h1>401 - Access Denied</h1>
+    <p>You need to log in to access this page.</p>
+    <a href="{{ path('home') }}">Return to Home</a>
+    <a href="{{ path('app_login') }}">Login</a>
+</section>
+{% endblock %}
