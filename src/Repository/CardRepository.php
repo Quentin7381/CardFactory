@@ -16,28 +16,20 @@ class CardRepository extends ServiceEntityRepository
         parent::__construct($registry, Card::class);
     }
 
-//    /**
-//     * @return Card[] Returns an array of Card objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Card
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Finds all cards of users with share_cards enabled, sorted by creation date.
+     *
+     * @param string $sortOrder 'ASC' for oldest first, 'DESC' for newest first
+     * @return Card[] Returns an array of Card objects
+     */
+    public function findCardsOfUsersWithShareCardsEnabled(string $sortOrder = 'DESC'): array
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.author', 'u')
+            ->andWhere('u.share_cards = :enabled')
+            ->setParameter('enabled', true)
+            ->orderBy('c.id', $sortOrder) // Assuming 'id' represents creation order
+            ->getQuery()
+            ->getResult();
+    }
 }

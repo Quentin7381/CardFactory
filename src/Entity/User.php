@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: JWT::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $JWTs;
 
+    #[ORM\Column]
+    private ?bool $share_cards = false;
+
     public function __construct()
     {
         $this->shared_cards = new ArrayCollection();
@@ -260,6 +263,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $jWT->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isShareCards(): ?bool
+    {
+        return $this->share_cards;
+    }
+
+    public function setShareCards(bool $share_cards): static
+    {
+        $this->share_cards = $share_cards;
 
         return $this;
     }

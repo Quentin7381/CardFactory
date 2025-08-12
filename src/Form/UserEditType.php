@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Form\AddressType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +28,11 @@ class UserEditType extends AbstractType
             ])
             ->add('address', AddressType::class, [
                 'label' => 'Address',
+                'required' => false,
+            ])
+            ->add('share_cards', CheckboxType::class, [
+                'label' => 'Share Cards',
+                'required' => false,
             ]);
     }
 
