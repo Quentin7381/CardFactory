@@ -17,19 +17,26 @@ class CardRepository extends ServiceEntityRepository
     }
 
     /**
-     * Finds all cards of users with share_cards enabled, sorted by creation date.
+     * Finds all cards of users with share_cards enabled, optionally filtered by template class, sorted by creation date.
      *
      * @param string $sortOrder 'ASC' for oldest first, 'DESC' for newest first
+     * @param string|null $templateClass Optional CSS template class to filter by
      * @return Card[] Returns an array of Card objects
      */
-    public function findCardsOfUsersWithShareCardsEnabled(string $sortOrder = 'DESC'): array
+    public function findSharedCards(string $sortOrder = 'DESC', ?string $templateClass = null): array
     {
-        return $this->createQueryBuilder('c')
+        $qb = $this->createQueryBuilder('c')
             ->innerJoin('c.author', 'u')
             ->andWhere('u.share_cards = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('c.id', $sortOrder) // Assuming 'id' represents creation order
-            ->getQuery()
-            ->getResult();
+            ->orderBy('c.id', $sortOrder); // Assuming 'id' represents creation order
+
+        if ($templateClass) {
+            $qb->innerJoin('c.template', 't')
+                ->andWhere('t.css_class = :templateClass')
+                ->setParameter('templateClass', $templateClass);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

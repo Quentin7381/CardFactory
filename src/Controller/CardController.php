@@ -160,8 +160,10 @@ final class CardController extends AbstractController
     public function getSharedCards(Request $request): JsonResponse
     {
         $sortOrder = $request->query->get('sort', 'DESC'); // Default to newest first
+        $templateClass = $request->query->get('template'); // Optional filter by template class
+
         $cards = $this->entityManager->getRepository(Card::class)
-            ->findCardsOfUsersWithShareCardsEnabled($sortOrder);
+            ->findSharedCards($sortOrder, $templateClass);
 
         $data = array_map(function (Card $card) {
             return [
