@@ -39,7 +39,7 @@ class Card implements \App\Entity\Interface\OrderableInterface
     #[ORM\JoinTable(name: 'card_shared_with')]
     private Collection $shared_with;
 
-    #[ORM\ManyToOne(inversedBy: 'card')]
+    #[ORM\ManyToOne(inversedBy: 'card', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Template $template = null;
 
@@ -147,6 +147,14 @@ class Card implements \App\Entity\Interface\OrderableInterface
         $this->card_image = $card_image;
 
         return $this;
+    }
+
+    public function getCardImageUrl(): ?string
+    {
+        if ($this->card_image) {
+            return '/uploads/images/' . $this->card_image; // Adjust the path as needed
+        }
+        return null;
     }
 
     // ----- CUSTOM METHODS -----

@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Order;
 use App\Service\CardService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 final class CardController extends AbstractController
 {
@@ -153,5 +154,28 @@ final class CardController extends AbstractController
 
         // Redirect to the list page
         return $this->redirectToRoute('app_card_list');
+    }
+
+    #[Route('/api/cards', name: 'api_cards_list', methods: ['GET'])]
+    public function getSharedCards(Request $request): JsonResponse
+    {
+        $sortOrder = $request->query->get('sort', 'DESC'); // Default to newest first
+        $cards = $this->entityManager->getRepository(Card::class)
+            ->findCardsOfUsersWithShareCardsEnabled($sortOrder);
+
+        $data = array_map(function (Card $card) {
+            return [
+                'id' => $card->getId(),
+                'name' => $card->getName(),
+                'author' => $card->getAuthor()->getUsername(),
+                'card_title' => $card->getCardTitle(),
+                'card_subtitle' => $card->getCardSubtitle(),
+                'card_body' => $card->getCardBody(),
+                'template' => $card->getTemplate()->toOrderArray(), // Ensure proper serialization
+                'card_image_url' => $card->getCardImageUrl(),
+            ];
+        }, $cards);
+
+        return new JsonResponse($data);
     }
 }
