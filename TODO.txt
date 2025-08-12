@@ -1,0 +1,7 @@
+Chaque utilisateur possède un boutton
+Ce boutton active l'accès public aux cartes
+L'API permet la récupération de toutes les cartes
+- Filtrable par type de carte
+
+README complet
+Fixtures
